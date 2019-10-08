@@ -23,9 +23,6 @@ public class SungJukImpl implements SungJuk {
 		eng = scan.nextInt();
 		System.out.print("수학 입력 : ");
 		mat = scan.nextInt();
-		
-		calc();
-		display();
 	}
 	
 	@Override
@@ -37,7 +34,7 @@ public class SungJukImpl implements SungJuk {
 	@Override
 	public void display() {
 		System.out.println("이름\t국어\t영어\t수학\t총점\t평균");
-		System.out.println(toString());
+		System.out.println(this);	// toString() 이나 this
 	}
 	
 	@Override
