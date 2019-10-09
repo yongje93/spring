@@ -38,8 +38,11 @@
 	</bean>
 	 -->
 	<!-- sample05 -->
+	<bean id="helloSpring" class="sample05.HelloSpring"/>
 	<bean id="sungJukDTO" class="sample05.SungJukDTO"/>
-	<bean id="sungJukInput" class="sample05.SungJukInput"/>
+	<bean id="sungJukInput" class="sample05.SungJukInput">
+		<property name="sungJukDTO" ref="sungJukDTO"/>
+	</bean>
 	<bean id="sungJukOutput" class="sample05.SungJukOutput"/>
 	<bean id="sungJukModify" class="sample05.SungJukModify"/>
 	<bean id="sungJukDelete" class="sample05.SungJukDelete"/>

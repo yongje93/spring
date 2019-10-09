@@ -1,10 +1,18 @@
 package sample05;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 public class HelloSpring {
+	ArrayList<SungJukDTO> sungJukDTO = new ArrayList<SungJukDTO>();
 	
 	public void menu() {
+		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+		SungJuk sungJuk;
+		
 		Scanner scan = new Scanner(System.in);
 		
 		while (true) {
@@ -19,7 +27,7 @@ public class HelloSpring {
 			int menu = scan.nextInt();
 
 			if (menu == 1) {
-				
+				sungJuk = context.getBean("sungJukInput", SungJukInput.class);
 			} else if (menu == 2) {
 				
 			} else if (menu == 3) {
@@ -35,7 +43,9 @@ public class HelloSpring {
 	}
 	
 	public static void main(String[] args) {
-		
+		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+		HelloSpring helloSpring = context.getBean("helloSpring", HelloSpring.class);
+		helloSpring.menu();
 	}
 
 }
