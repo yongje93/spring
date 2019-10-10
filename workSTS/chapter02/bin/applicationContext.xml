@@ -63,6 +63,9 @@
 	<bean id="sungJukDelete" class="sample05.SungJukDelete">
 		<property name="list" ref="arrayList"/>
 	</bean>
+	<bean id="sungJukSort" class="sample05.SungJukSort">
+		<property name="list" ref="arrayList"/>
+	</bean>
 	
 	<bean id="arrayList" class="java.util.ArrayList"/>
 	

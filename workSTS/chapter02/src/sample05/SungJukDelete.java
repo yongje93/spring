@@ -1,5 +1,6 @@
 package sample05;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -17,16 +18,17 @@ public class SungJukDelete implements SungJuk {
 
 		int sw = 0;
 		// 이름 있나 확인
-		for (SungJukDTO sungJukDTO : list) {
-			if (name.equals(sungJukDTO.getName())) {
-				list.remove(sungJukDTO);
+		Iterator<SungJukDTO> it = list.iterator();
+		while (it.hasNext()) {
+			if (name.equals(it.next().getName())) {
+				it.remove();
 				sw = 1;
 			}
 		}
-		if(sw == 0) 
+		if (sw == 0)
 			System.out.println("\n삭제할 이름이 없습니다.");
 		else {
-			System.out.println("\n"+name+"님의 데이터를 삭제하였습니다.");
+			System.out.println("\n" + name + "님의 데이터를 삭제하였습니다.");
 		}
 	}
 

@@ -13,6 +13,7 @@
 	<!-- <context:component-scan base-package="sample03"/> -->
 	<!-- <context:component-scan base-package="com.conf"/> -->
 	<!-- sample05 -->
+	<context:component-scan base-package="sample05"/>
 	<context:component-scan base-package="com.conf"/>
 
 </beans>
