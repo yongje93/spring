@@ -27,7 +27,7 @@
 	</bean>
 	
 	<!-- sample03 -->
-	<!-- <bean id="sungJukDTO" class="sample03.SungJukDTO">
+ 	<bean id="sungJukDTO" class="sample03.SungJukDTO">
 		<property name="name" value="홍길동"/>
 		<property name="kor" value="97"/>
 		<property name="eng" value="100"/>
@@ -36,14 +36,36 @@
 	<bean id="sungJukImpl" class="sample03.SungJukImpl">
 		<constructor-arg ref="sungJukDTO"/>
 	</bean>
-	 -->
+	
+	<!-- sample04 -->
+	<bean id="fileOutputter" class="sample04.FileOutputter">
+		<property name="filePath" value="C:/Spring/"/>
+		<property name="fileName" value="result.txt"/>
+	</bean>
+	<bean id="messageBeanImpl2" class="sample04.MessageBeanImpl">
+		<constructor-arg value="홍길동"/>
+		<property name="phone" value="010-1234-5678"/>
+		<property name="outputter" ref="fileOutputter"></property>	
+	</bean>
+	
 	<!-- sample05 -->
 	<bean id="helloSpring" class="sample05.HelloSpring"/>
-	<bean id="sungJukDTO" class="sample05.SungJukDTO"/>
-	<bean id="sungJukInput" class="sample05.SungJukInput">
-		<property name="sungJukDTO" ref="sungJukDTO"/>
+	<bean id="sungJukInput" class="sample05.SungJukInput" scope="prototype">
+		<property name="list" ref="arrayList"/>
+		<property name="sungJukDTO" ref="sungJukDTO2"/>
 	</bean>
-	<bean id="sungJukOutput" class="sample05.SungJukOutput"/>
-	<bean id="sungJukModify" class="sample05.SungJukModify"/>
-	<bean id="sungJukDelete" class="sample05.SungJukDelete"/>
+	<bean id="sungJukOutput" class="sample05.SungJukOutput">
+		<property name="list" ref="arrayList"/>
+	</bean>
+	<bean id="sungJukModify" class="sample05.SungJukModify">
+		<property name="list" ref="arrayList"/>
+	</bean>
+	<bean id="sungJukDelete" class="sample05.SungJukDelete">
+		<property name="list" ref="arrayList"/>
+	</bean>
+	
+	<bean id="arrayList" class="java.util.ArrayList"/>
+	
+	<bean id="sungJukDTO2" class="sample05.SungJukDTO" scope="prototype"/>
+	
 </beans>
