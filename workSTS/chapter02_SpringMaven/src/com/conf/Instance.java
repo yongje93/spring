@@ -1,6 +1,7 @@
 package com.conf;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,7 +37,7 @@ public class Instance { // 생성하는애들 모아놓음
 	
 	// sample05
 	@Bean(name="list")
-	public ArrayList<SungJukDTO2> getArrayList() {
+	public List<SungJukDTO2> getArrayList() {
 		return new ArrayList<SungJukDTO2>();
 	}
 

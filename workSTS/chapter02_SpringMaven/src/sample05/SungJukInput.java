@@ -1,15 +1,21 @@
 package sample05;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.ComponentScan;
 
 @ComponentScan("com.conf")
 public class SungJukInput implements SungJuk {
+//	@Autowired
+//	private ArrayList<SungJukDTO2> list;
+	
+	@Qualifier("list")
 	@Autowired
-	private ArrayList<SungJukDTO2> list;
+	private List<SungJukDTO2> list;
+	
 	@Autowired
 	private SungJukDTO2 sungJukDTO2;
 
