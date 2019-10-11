@@ -1,8 +1,8 @@
 package sample03;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 public class HellpSpring {
 
@@ -23,7 +23,7 @@ public class HellpSpring {
 		bean3.sayHello("Spring");
 		System.out.println();
 		
-		
+		((AbstractApplicationContext) context).close();
 	}
 
 }
