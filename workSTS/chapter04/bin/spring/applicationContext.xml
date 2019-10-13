@@ -48,15 +48,18 @@
 	</bean>
 	<!-- select -->
 	<bean id="userSelectService" class="user.service.UserSelectService">
-	
+		<property name="userDTO" ref="userDTO"/>
+		<property name="userDAO" ref="userDAOImpl"/>
 	</bean>
 	<!-- update -->
 	<bean id="userUpdateService" class="user.service.UserUpdateService">
-	
+		<property name="userDTO" ref="userDTO"/>
+		<property name="userDAO" ref="userDAOImpl"/>
 	</bean>
 	<!-- delete -->
 	<bean id="userDeleteService" class="user.service.UserDeleteService">
-	
+		<property name="userDTO" ref="userDTO"/>
+		<property name="userDAO" ref="userDAOImpl"/>
 	</bean>
 	
 </beans>
