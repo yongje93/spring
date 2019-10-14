@@ -35,12 +35,13 @@
 	<bean id="userDTO" class="user.bean.UserDTO"/>
 	<!-- DAO -->
 	<bean id="userDAOImpl" class="user.dao.UserDAOImpl">
-		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+		<!-- <property name="jdbcTemplate" ref="jdbcTemplate"/> -->
+		<property name="dataSource" ref="dataSource"/>	<!-- jdbcTemplate 자동으로 만드는 대신에 커넥션풀은 가지고 있어야함 -->
 	</bean>
 	<!-- JdbcTemplate -->
-	<bean id="jdbcTemplate"	class="org.springframework.jdbc.core.JdbcTemplate">
+	<!-- <bean id="jdbcTemplate"	class="org.springframework.jdbc.core.JdbcTemplate">
 		<property name="dataSource" ref="dataSource"/>
-	</bean>
+	</bean> -->
 	<!-- insert -->
 	<bean id="userInsertService" class="user.service.UserInsertService">
 		<property name="userDTO" ref="userDTO"/>
@@ -48,17 +49,14 @@
 	</bean>
 	<!-- select -->
 	<bean id="userSelectService" class="user.service.UserSelectService">
-		<property name="userDTO" ref="userDTO"/>
 		<property name="userDAO" ref="userDAOImpl"/>
 	</bean>
 	<!-- update -->
 	<bean id="userUpdateService" class="user.service.UserUpdateService">
-		<property name="userDTO" ref="userDTO"/>
 		<property name="userDAO" ref="userDAOImpl"/>
 	</bean>
 	<!-- delete -->
 	<bean id="userDeleteService" class="user.service.UserDeleteService">
-		<property name="userDTO" ref="userDTO"/>
 		<property name="userDAO" ref="userDAOImpl"/>
 	</bean>
 	

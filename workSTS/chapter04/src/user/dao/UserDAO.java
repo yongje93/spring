@@ -1,14 +1,14 @@
 package user.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import user.bean.UserDTO;
 
 public interface UserDAO {
-	
 	public void userWrite(UserDTO userDTO);
-	
-	public UserDTO userSelect(String name);
-	
-	public void userUpdate(UserDTO userDTO);
-	
-	public void userDelete(String name);
+	public List<UserDTO> getUserList();
+	public UserDTO getUser(String id);
+	public void userUpdate(Map<String, String> map);
+	public void userDelete(String id);	
 }

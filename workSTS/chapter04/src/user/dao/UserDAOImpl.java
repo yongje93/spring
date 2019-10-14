@@ -1,34 +1,73 @@
 package user.dao;
 
-import org.springframework.jdbc.core.JdbcTemplate;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import lombok.Setter;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
+
 import user.bean.UserDTO;
 
+/*
 public class UserDAOImpl implements UserDAO {
 	@Setter
 	private JdbcTemplate jdbcTemplate;
-	
+
 	@Override
 	public void userWrite(UserDTO userDTO) {
 		String sql = "insert into usertable values(?,?,?)";
 		jdbcTemplate.update(sql, userDTO.getName(), userDTO.getId(), userDTO.getPwd());
 	}
 
+}
+*/
+//----------------------------------------------------------------------
+public class UserDAOImpl extends NamedParameterJdbcDaoSupport implements UserDAO {
+	// NamedParameterJdbcDaoSupport를 상속하면 NamedParameterJdbcTemplate, JdbcTemplate를
+	// 준다. Setter로 JdbcTemplate 안받아도됨.
 	@Override
-	public UserDTO userSelect(String name) {
-		String sql = "select * from usertable where name=?";
-		return null;
+	public void userWrite(UserDTO userDTO) {
+		// String sql = "insert into usertable values(?,?,?)";
+		// getJdbcTemplate().update(sql, userDTO.getName(), userDTO.getId(),
+		// userDTO.getPwd()); //NamedParameterJdbcDaoSupport가 getJdbcTemplate 가짐
+
+		String sql = "insert into usertable values(:name,:id,:pwd)"; // 이걸로 할려면 Map을 써야됨
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("name", userDTO.getName());
+		map.put("id", userDTO.getId());
+		map.put("pwd", userDTO.getPwd());
+		getNamedParameterJdbcTemplate().update(sql, map); // 이름으로 매칭해서 sql 실행함
 	}
 
 	@Override
-	public void userUpdate(UserDTO userDTO) {
-		String sql = "update usertable set id=?, pwd=? where name=?";
-		
+	public List<UserDTO> getUserList() {
+		String sql = "select * from usertable";
+		// RowMapper -> DTO에 name, id, pwd를 mapping 한다. (같은 이름일 경우) 알아서 list에 담아옴
+		return getJdbcTemplate().query(sql, new BeanPropertyRowMapper<UserDTO>(UserDTO.class));
 	}
 
 	@Override
-	public void userDelete(String name) {
-		String sql = "delete from usertable where name=?";
+	public UserDTO getUser(String id) {
+		String sql = "select * from usertable where id=:id";
+		try {
+			return getJdbcTemplate().queryForObject(sql, new BeanPropertyRowMapper<UserDTO>(UserDTO.class), id);
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
 	}
+
+	@Override
+	public void userUpdate(Map<String, String> map) {
+		String sql = "update usertable set name=:name, pwd=:pwd where id=:id";
+		getNamedParameterJdbcTemplate().update(sql, map);
+	}
+
+	@Override
+	public void userDelete(String id) {
+		String sql = "delete from usertable where id=:id";
+		getJdbcTemplate().update(sql, id);
+	}
+
 }

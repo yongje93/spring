@@ -32,7 +32,7 @@ public class UserInsertService implements UserService {
 		userDAO.userWrite(userDTO);
 		
 		// 응답
-		System.out.println("데이터를 저장하였습니다.");
+		System.out.println("\n데이터를 저장하였습니다.");
 	}
 
 }
