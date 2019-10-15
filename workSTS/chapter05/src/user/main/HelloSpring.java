@@ -20,12 +20,13 @@ public class HelloSpring {
 			System.out.println("    2. 출력");
 			System.out.println("    3. 수정");
 			System.out.println("    4. 삭제");
-			System.out.println("    5. 끝");
+			System.out.println("    5. 검색");
+			System.out.println("    6. 종료");
 			System.out.println("******************");
 			System.out.print("> 번호 입력 : ");
 			menu = scan.nextInt();
 
-			if (menu == 5) break;
+			if (menu == 6) break;
 
 			if (menu == 1) {
 				userService = (UserService) context.getBean("userInsertService"); // 입력
@@ -35,8 +36,11 @@ public class HelloSpring {
 				userService = (UserService) context.getBean("userUpdateService"); // 수정
 			} else if (menu == 4) {
 				userService = (UserService) context.getBean("userDeleteService"); // 삭제
+			} else if (menu == 5) {
+				userService = (UserService) context.getBean("userSearchService"); // 검색
 			} else {
-				System.out.println("1~5 중 하나만 입력하세요!");
+				System.out.println("\n1~6 중 하나만 입력하세요!");
+				continue;
 			}
 			userService.execute();
 		} // While

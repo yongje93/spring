@@ -21,7 +21,7 @@ public class UserDeleteService implements UserService {
 		// DB
 		UserDTO userDTO = userDAO.getUser(id);
 		if (userDTO == null) {
-			System.out.println("\n삭제 하려는 아이디가 없습니다.");
+			System.out.println("\n삭제하려는 아이디가 없습니다.");
 			return;
 		}
 		userDAO.userDelete(id);

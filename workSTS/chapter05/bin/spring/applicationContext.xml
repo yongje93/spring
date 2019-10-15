@@ -10,6 +10,8 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 	
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
 	<!-- Connection Pool -->
 	<bean id="dataSource" 
 		  class="org.apache.commons.dbcp2.BasicDataSource"
@@ -35,5 +37,36 @@
 	<!-- Transaction -->
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"/>	<!-- commit, rollback 하려면 dataSource를 가지고 있어야함 -->
+	</bean>
+	
+	<!-- main -->
+	<bean id="helloSpring" class="user.main.HelloSpring"/>
+	<!-- DTO -->
+	<bean id="userDTO" class="user.bean.UserDTO"/>
+	<!-- DAO -->
+	<bean id="userDAO" class="user.dao.UserDAOMybatis">
+		<property name="sqlSession" ref="sqlSession"/>
+	</bean>
+	<!-- insert -->
+	<bean id="userInsertService" class="user.service.UserInsertService">
+		<property name="userDTO" ref="userDTO"/>
+		<property name="userDAO" ref="userDAO"/>
+	</bean>
+	<!-- select -->
+	<bean id="userSelectService" class="user.service.UserSelectService">
+		<property name="userDAO" ref="userDAO"/>
+	</bean>
+	<!-- update -->
+	<bean id="userUpdateService" class="user.service.UserUpdateService">
+		<property name="userDAO" ref="userDAO"/>
+	</bean>
+	<!-- delete -->
+	<bean id="userDeleteService" class="user.service.UserDeleteService">
+		<property name="userDAO" ref="userDAO"/>
+	</bean>
+	<!-- search -->
+	<bean id="userSearchService" class="user.service.UserSearchService">
+		<property name="userDAO" ref="userDAO"/>
+		<property name="userDTO" ref="userDTO"/>
 	</bean>
 </beans>

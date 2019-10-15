@@ -3,4 +3,37 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="userSQL">
+	<!-- userWrite -->
+	<insert id="userWrite" parameterType="user">
+		insert into usertable values(#{name}, #{id}, #{pwd})
+	</insert>
+	<!-- getUserList -->
+	<select id="getUserList" resultType="user">
+		select * from usertable
+	</select>
+	<!-- getUser -->
+	<select id="getUser" parameterType="string" resultType="user">
+		select * from usertable where id = #{id}
+	</select>
+	<!-- userUpdate -->
+	<update id="userUpdate" parameterType="java.util.Map">
+		update usertable set name = #{name}, pwd = #{pwd} where id = #{id}
+	</update>
+	<!-- userDelete -->
+	<delete id="userDelete" parameterType="string">
+		delete from usertable where id = #{id}
+	</delete>
+	<!-- userSearch -->
+	<select id="userSearch" parameterType="java.util.Map" resultType="user">
+		<!--select * from usertable where ${key} like '%'||#{value}||'%' -->
+		select * from usertable where
+		<choose>
+			<when test="key == 'name'">
+				name like '%'||#{value}||'%'
+			</when>
+			<otherwise>
+				id like '%'||#{value}||'%'
+			</otherwise>
+		</choose>
+	</select>
 </mapper>
