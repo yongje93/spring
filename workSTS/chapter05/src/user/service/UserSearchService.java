@@ -11,8 +11,6 @@ import user.dao.UserDAO;
 
 public class UserSearchService implements UserService {
 	@Setter
-	private UserDTO userDTO;
-	@Setter
 	private UserDAO userDAO;
 	
 	@Override

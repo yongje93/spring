@@ -67,6 +67,5 @@
 	<!-- search -->
 	<bean id="userSearchService" class="user.service.UserSearchService">
 		<property name="userDAO" ref="userDAO"/>
-		<property name="userDTO" ref="userDTO"/>
 	</bean>
 </beans>
