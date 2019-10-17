@@ -1,25 +1,15 @@
 package com.controller;
 
-import java.util.Map;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.bean.SumDTO;
 
-import lombok.Setter;
-
 @Controller
 public class SumController {
-	@Setter
-	private SumDTO sumDTO;
-	
 //	@RequestMapping(value="/input.do", method=RequestMethod.GET)
 //	public ModelAndView input() {
 //		ModelAndView mav = new ModelAndView();
@@ -73,7 +63,7 @@ public class SumController {
 //	}
 	
 	@RequestMapping(value="/result.do", method=RequestMethod.GET)
-	public String result(@ModelAttribute SumDTO sumDTO, Model model) {	//map은 데이터 입력 ModelMap은 데이터 출력
+	public String result(@ModelAttribute SumDTO sumDTO, Model model) {
 		model.addAttribute("sumDTO", sumDTO);
 		return "/sum/result";
 	}
