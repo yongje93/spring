@@ -23,4 +23,25 @@ public class UserServiceImpl implements UserService {
 		return userDAO.getList();
 	}
 
+	@Override
+	public UserDTO getUser(String id) {
+		return userDAO.getUser(id);
+	}
+
+	@Override
+	public void modify(UserDTO userDTO) {
+		userDAO.modify(userDTO);
+	}
+
+	@Override
+	public void delete(String id) {
+		userDAO.delete(id);
+	}
+
+	@Override
+	public boolean checkId(String id) {
+		return userDAO.isExistId(id);
+	}
+
+
 }

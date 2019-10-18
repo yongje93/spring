@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -43,4 +44,48 @@ public class UserController {
 		mav.setViewName("jsonView"); //servlet-context의 jsonView를 거쳐라. (viewResolver가 아니라)
 		return mav;
 	}
+	
+	@RequestMapping(value="/user/modifyForm", method=RequestMethod.GET)
+	public String modifyForm() {
+		return "/user/modifyForm";
+	}
+	
+	@RequestMapping(value="/user/modify", method=RequestMethod.POST)
+	@ResponseBody
+	public void modify(@ModelAttribute UserDTO userDTO) {
+		userService.modify(userDTO);
+	}
+
+	@RequestMapping(value="/user/getUser", method=RequestMethod.POST)
+	public ModelAndView getUser(@RequestParam String id) {
+		UserDTO userDTO = userService.getUser(id);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("userDTO", userDTO);
+		mav.setViewName("jsonView");
+		return mav;
+	}
+	
+	@RequestMapping(value="/user/deleteForm", method=RequestMethod.GET)
+	public String deleteForm() {
+		return "/user/deleteForm";
+	}
+	
+	@RequestMapping(value="/user/delete", method=RequestMethod.POST)
+	@ResponseBody
+	public void delete(@RequestParam String id) {
+		userService.delete(id);
+	}
+	
+	@RequestMapping(value="/user/checkId", method=RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView checkId(@RequestParam String id) {
+		boolean exist = userService.checkId(id);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("exist", exist);
+		mav.setViewName("jsonView");
+		return mav;
+	}
+	
 }

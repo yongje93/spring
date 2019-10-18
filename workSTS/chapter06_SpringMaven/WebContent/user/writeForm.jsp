@@ -12,21 +12,21 @@
 		<tr>
 			<td width="70" align="center">이름</td>
 			<td>
-				<input type="text" name="name" id="name">
+				<input type="text" name="name" id="name" placeholder="이름을 입력하세요">
 				<div id="nameDiv"></div>
 			</td>
 		</tr>
 		<tr>
 			<td align="center">아이디</td>
 			<td>
-				<input type="text" name="id" id="id">
+				<input type="text" name="id" id="id" placeholder="아이디를 입력하세요">
 				<div id="idDiv"></div>
 			</td>
 		</tr>
 		<tr>
 			<td align="center">비밀번호</td>
 			<td>
-				<input type="text" name="pwd" id="pwd">
+				<input type="password" name="pwd" id="pwd">
 				<div id="pwdDiv"></div>
 			</td>
 		</tr>
@@ -42,6 +42,30 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
+	$("#id").focus();
+	
+	$("#id").blur(function(){
+		if($("#id").val() == "") {
+			$("#idDiv").text("먼저 아이디를 입력하세요").css("color", "tomato").css("font-size", "8pt").css("font-weight", "bold");
+			$("#id").focus();
+		} else {
+			$.ajax({
+				type    : "post",
+				url     : "/chapter06_SpringMaven/user/checkId",
+				data    : {"id" : $("#id").val()},
+				dataType: "json",
+				success : function(data){
+					if(data.exist) {
+						$("#idDiv").text("아이디 사용 불가능").css("color", "tomato").css("font-size", "8pt").css("font-weight", "bold");
+						$("#id").focus();
+					} else {
+						$("#idDiv").text("아이디 사용 가능").css("color", "blue").css("font-size", "8pt").css("font-weight", "bold");
+					}
+				}
+			});
+		}
+	});
+	
 	$("#writeBtn").click(function(){
 		$("#nameDiv").empty();
 		$("#idDiv").empty();

@@ -2,12 +2,17 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
 	<context:component-scan base-package="main.controller"/>
 	<context:component-scan base-package="user.controller"/>
 
+	<mvc:annotation-driven/>
+	<mvc:resources mapping="/image/**" location="/image/"/>
+	
 	<bean id="viewResolver"	class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="suffix" value=".jsp"/>
 	</bean>
@@ -18,7 +23,8 @@
 	</bean>
 	<!-- list의 내용을 json에 맞게 매핑해서 저장 -->
 	<bean id="beanNameViewResolver"	class="org.springframework.web.servlet.view.BeanNameViewResolver">
-		<property name="order" value="0"/> <!-- 순차적으로 가지고와라 -->
+		<property name="order" value="0"/> <!-- order가 0번이니까 제일먼저 실행하고 나머지 실행 -->
 	</bean>
+	
 	
 </beans>

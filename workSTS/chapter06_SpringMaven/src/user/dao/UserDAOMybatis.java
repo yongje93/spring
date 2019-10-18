@@ -32,8 +32,8 @@ public class UserDAOMybatis implements UserDAO {
 	}
 
 	@Override
-	public void update(Map<String, String> map) {
-		sqlSession.update("userSQL.update", map);
+	public void modify(UserDTO userDTO) {
+		sqlSession.update("userSQL.modify", userDTO);
 	}
 
 	@Override
@@ -44,6 +44,16 @@ public class UserDAOMybatis implements UserDAO {
 	@Override
 	public List<UserDTO> search(Map<String, String> map) {
 		return sqlSession.selectList("userSQL.search", map);
+	}
+
+	@Override
+	public boolean isExistId(String id) {
+		boolean exist = false;
+		UserDTO userDTO = sqlSession.selectOne("userSQL.isExistId", id);
+		if(userDTO != null) {
+			exist = true;
+		}
+		return exist;
 	}
 	
 }

@@ -17,7 +17,7 @@
 	<h3>*** 메인화면 ***</h3>
 	<a id="mainA" href="/chapter06_SpringMaven/user/writeForm">입력</a><br>
 	<a id="mainA" href="../user/list">출력</a><br>
-	<a id="mainA" href="#">수정</a><br>
-	<a id="mainA" href="#">삭제</a><br>
+	<a id="mainA" href="../user/modifyForm">수정</a><br>
+	<a id="mainA" href="../user/deleteForm">삭제</a><br>
 </body>
 </html>

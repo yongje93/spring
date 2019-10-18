@@ -15,7 +15,7 @@
 		select * from usertable where id = #{id}
 	</select>
 	
-	<update id="update" parameterType="java.util.Map">
+	<update id="modify" parameterType="user">
 		update usertable set name = #{name}, pwd = #{pwd} where id = #{id}
 	</update>
 	
@@ -34,5 +34,9 @@
 				id like '%'||#{value}||'%'
 			</otherwise>
 		</choose>
+	</select>
+	
+	<select id="isExistId" parameterType="String" resultType="user">
+		select * from usertable where id = #{id}
 	</select>
 </mapper>
