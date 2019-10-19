@@ -4,7 +4,10 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
-
+	<!-- ContextLoaderListener가 생성하는 Root WAC -->
+	<!-- 웹 환경과 독립적인 빈 
+		 디폴트 설정 파일 /WEB-INF/applicationContext.xml로 설정됨
+		 서비스 계층과 데이터 액세스 계층을 포함해서 웹 환경과 직접 관련이 없는 모든 빈들을 등록 (DAO, DTO 등) -->
 	<context:component-scan base-package="user.conf"/>
 	<context:component-scan base-package="user.service"/>
 	<context:component-scan base-package="user.dao"/>

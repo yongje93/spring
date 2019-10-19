@@ -6,7 +6,9 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
-
+	<!-- DispatcherServlet이 생성하는 WAC -->
+	<!-- DispatcherServlet이 직접 사용하는 컨트롤러를 포함한 웹 관련 빈을 등록
+		 디폴프 설정 파일 /WEB-INF/서블릿이름-servlet.xml로 설정됨 -->
 	<context:component-scan base-package="main.controller"/>
 	<context:component-scan base-package="user.controller"/>
 
