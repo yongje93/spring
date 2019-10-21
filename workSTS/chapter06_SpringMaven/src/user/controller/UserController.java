@@ -1,16 +1,20 @@
 package user.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import net.sf.json.JSONArray;
 import user.bean.UserDTO;
 import user.service.UserService;
 
@@ -35,14 +39,27 @@ public class UserController {
 		return "/user/list";
 	}
 	
+//	@RequestMapping(value="/user/getList", method=RequestMethod.POST)
+//	public ModelAndView getList() {
+//		List<UserDTO> list = userService.getList();	// list를 json으로 변경 해야됨
+//		
+//		ModelAndView mav = new ModelAndView();
+//		mav.addObject("list", list);
+//		mav.setViewName("jsonView"); //servlet-context의 jsonView를 거쳐라. (viewResolver가 아니라)
+//		return mav;
+//	}
+	
 	@RequestMapping(value="/user/getList", method=RequestMethod.POST)
-	public ModelAndView getList() {
-		List<UserDTO> list = userService.getList();	// list를 json으로 변경 해야됨
+	@ResponseBody
+	public Map<String, Object> getList() {
+		List<UserDTO> list = userService.getList();	
 		
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("list", list);
-		mav.setViewName("jsonView"); //servlet-context의 jsonView를 거쳐라. (viewResolver가 아니라)
-		return mav;
+		JSONArray jsonArray = JSONArray.fromObject(list); //fromObject - static 함수	// 이름이 없는 형태 [ {" "," "} ]
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", jsonArray);
+		
+		//System.out.println(map);
+		return map;
 	}
 	
 	@RequestMapping(value="/user/modifyForm", method=RequestMethod.GET)
@@ -79,11 +96,27 @@ public class UserController {
 	
 	@RequestMapping(value="/user/checkId", method=RequestMethod.POST)
 	@ResponseBody
-	public ModelAndView checkId(@RequestParam String id) {
-		boolean exist = userService.checkId(id);
+	public String checkId(@RequestParam String id) {
+		UserDTO userDTO = userService.checkId(id);
+		
+		if(userDTO == null) {
+			return "not_exist";
+		} else {
+			return "exist";
+		}
+	}
+	
+	@RequestMapping(value="/user/search", method=RequestMethod.POST)
+	//public ModelAndView search(@RequestParam String option, @RequestParam String keyword) {
+	public ModelAndView search(@RequestBody Map<String, String> map) {
+		//System.out.println("option : " + option + " , keyword : " + keyword );
+		//Map<String, String> map = new HashMap<String, String>();
+		//map.put("option", option);
+		//map.put("keyword", keyword);
+		List<UserDTO> searchList = userService.search(map);
 		
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("exist", exist);
+		mav.addObject("searchList", searchList);
 		mav.setViewName("jsonView");
 		return mav;
 	}

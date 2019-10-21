@@ -5,6 +5,16 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+#searchDiv {
+	margin-left: 15px;
+	margin-top: 15px;
+}
+#resultDiv {
+	margin-top: 10px;
+	margin-left: 90px;
+}
+</style>
 </head>
 <body>
 <img src="../image/brown.png" width="50" height="50" onclick="location.href='/chapter06_SpringMaven/main/index.do'" style="cursor: pointer;">
@@ -15,6 +25,18 @@
 		<th width="100">비밀번호</th>
 	</tr>
 </table>
+<div id="searchDiv">
+<form name="searchForm">
+	<select name="option" id="option">
+		<option value="">--선택--</option>
+		<option value="name">이름</option>
+		<option value="id">아이디</option>
+	</select>
+	<input type="text" name="keyword" id="keyword" placeholder="검색어를 입력하세요">
+	<input type="button" id="searchBtn" value="검색"><br>
+	<div id="resultDiv"></div>
+</form>
+</div>
 </body>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
@@ -26,7 +48,7 @@ $(document).ready(function(){
 		success : function(data){	//data로 json 들어옴
 			//alert(JSON.stringify(data));
 			$.each(data.list, function(index, items){	// index 0 items {"name" : "홍길동", "id" : "hong", "pwd" : "111"}
-				$('<tr/>').append($('<td/>', {
+				$("<tr/>").append($("<td/>", {
 					align: "center" ,
 					text: items.name
 				})).append($("<td/>", {
@@ -36,8 +58,51 @@ $(document).ready(function(){
 					align: "center" ,
 					text: items.pwd
 				})).appendTo("#table");
-			
 			});
+		},
+		error : function(e){
+			console.log(e);
+			alert("실패");
+		}
+	});
+	
+	
+	$("#searchBtn").click(function(){
+		if($("#option option:selected").val() == "") {
+			$("#resultDiv").text("검색 옵션을 선택하세요!").css("font-size", "9pt").css("color", "tomato").css("font-weight", "bold");
+		} else {
+			$("#resultDiv").empty();
+			
+			if($("#keyword").val() == "") {
+				$("#resultDiv").text("검색어를 입력하세요!").css("font-size", "9pt").css("color", "tomato").css("font-weight", "bold");
+				$("#keyword").focus();
+			} else {
+				$.ajax({
+					type : "post",
+					url  : "/chapter06_SpringMaven/user/search",
+					data : JSON.stringify({"option" : $("#option option:selected").val(), "keyword" : $("#keyword").val()}),
+					contentType : "application/json; charset=UTF-8",
+					dataType: "json",
+					success : function(data) {
+						//alert(JSON.stringify(data));
+						$("#table tr:not(:first)").empty();
+						//$("#table tr:gt(0)").empty();
+						
+						$.each(data.searchList, function(index, items){
+							$("<tr/>").append($("<td/>", {
+								align: "center" ,
+								text: items.name
+							})).append($("<td/>", {
+								align: "center" ,
+								text: items.id	
+							})).append($("<td/>", {
+								align: "center" ,
+								text: items.pwd
+							})).appendTo("#table");
+						});
+					}
+				});
+			}
 		}
 	});
 });

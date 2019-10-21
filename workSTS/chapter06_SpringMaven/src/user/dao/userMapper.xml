@@ -24,19 +24,20 @@
 	</delete>
 	
 	<select id="search" parameterType="java.util.Map" resultType="user">
-		<!--select * from usertable where ${key} like '%'||#{value}||'%' -->
+		<!--select * from usertable where ${option} like '%'||#{keyword}||'%' -->
 		select * from usertable where
 		<choose>
-			<when test="key == 'name'">
-				name like '%'||#{value}||'%'
+			<when test="option == 'name'">
+				name like '%'||#{keyword}||'%'
 			</when>
 			<otherwise>
-				id like '%'||#{value}||'%'
+				id like '%'||#{keyword}||'%'
 			</otherwise>
 		</choose>
 	</select>
 	
-	<select id="isExistId" parameterType="String" resultType="user">
+	<select id="checkId" parameterType="String" resultType="user">
 		select * from usertable where id = #{id}
 	</select>
+	
 </mapper>

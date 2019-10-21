@@ -38,10 +38,14 @@ $(document).ready(function(){
 							$.ajax({
 								type    : "post",
 								url     : "/chapter06_SpringMaven/user/delete",
-								data    : {"id" : data.userDTO.id},
+								data    : {"id" : $("#searchId").val()},
 								success : function(){
 									alert("삭제 완료!!");
 									location.href="http://localhost:8080/chapter06_SpringMaven/main/index.do";
+								}, 
+								error	: function(e) {
+									console.log(e);
+									alert("실패 = " + e);
 								}
 							});
 						}

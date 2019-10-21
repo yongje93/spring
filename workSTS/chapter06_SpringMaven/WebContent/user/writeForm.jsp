@@ -42,8 +42,7 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-	$("#id").focus();
-	
+	/*
 	$("#id").blur(function(){
 		if($("#id").val() == "") {
 			$("#idDiv").text("먼저 아이디를 입력하세요").css("color", "tomato").css("font-size", "8pt").css("font-weight", "bold");
@@ -53,14 +52,40 @@ $(document).ready(function(){
 				type    : "post",
 				url     : "/chapter06_SpringMaven/user/checkId",
 				data    : {"id" : $("#id").val()},
-				dataType: "json",
+				dataType: "text",
 				success : function(data){
-					if(data.exist) {
+					if(data == "exist") {
 						$("#idDiv").text("아이디 사용 불가능").css("color", "tomato").css("font-size", "8pt").css("font-weight", "bold");
 						$("#id").focus();
-					} else {
+					} else if (data == "not_exist") {
 						$("#idDiv").text("아이디 사용 가능").css("color", "blue").css("font-size", "8pt").css("font-weight", "bold");
 					}
+				}
+			});
+		}
+	});
+	*/
+	$("#id").focusout(function(){
+		if($("#id").val() == "") {
+			$("#idDiv").text("먼저 아이디를 입력하세요").css("color", "tomato").css("font-size", "8pt").css("font-weight", "bold");
+			$("#id").focus();
+		} else {
+			$.ajax({
+				type    : "post",
+				url     : "/chapter06_SpringMaven/user/checkId",
+				data    : {"id" : $("#id").val()},
+				dataType: "text",
+				success : function(data){
+					if(data == "exist") {
+						$("#idDiv").text("아이디 사용 불가능").css("color", "tomato").css("font-size", "8pt").css("font-weight", "bold");
+						$("#id").focus();
+					} else if (data == "not_exist") {
+						$("#idDiv").text("아이디 사용 가능").css("color", "blue").css("font-size", "8pt").css("font-weight", "bold");
+					}
+				},
+				error : function(err) {
+					console.log(err);
+					alert("실패");
 				}
 			});
 		}

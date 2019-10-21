@@ -47,13 +47,8 @@ public class UserDAOMybatis implements UserDAO {
 	}
 
 	@Override
-	public boolean isExistId(String id) {
-		boolean exist = false;
-		UserDTO userDTO = sqlSession.selectOne("userSQL.isExistId", id);
-		if(userDTO != null) {
-			exist = true;
-		}
-		return exist;
+	public UserDTO checkId(String id) {
+		return sqlSession.selectOne("userSQL.checkId", id);
 	}
 	
 }

@@ -12,8 +12,8 @@
 	<context:component-scan base-package="main.controller"/>
 	<context:component-scan base-package="user.controller"/>
 
-	<mvc:annotation-driven/>
-	<mvc:resources mapping="/image/**" location="/image/"/>
+	<mvc:annotation-driven/> <!-- 디폴트 설정을 가지고 활성화 하기 위해서 사용 -->
+	<mvc:resources mapping="/image/**" location="/image/"/> <!-- 자원의 위치를 매핑 컨트롤러로 못가게 /image/** 하위폴더까지 다 -->
 	
 	<bean id="viewResolver"	class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="suffix" value=".jsp"/>
@@ -27,6 +27,5 @@
 	<bean id="beanNameViewResolver"	class="org.springframework.web.servlet.view.BeanNameViewResolver">
 		<property name="order" value="0"/> <!-- order가 0번이니까 제일먼저 실행하고 나머지 실행 -->
 	</bean>
-	
 	
 </beans>

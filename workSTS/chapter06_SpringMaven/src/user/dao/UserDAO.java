@@ -12,5 +12,5 @@ public interface UserDAO {
 	public void modify(UserDTO userDTO);
 	public void delete(String id);
 	public List<UserDTO> search(Map<String, String> map);
-	public boolean isExistId(String id);
+	public UserDTO checkId(String id);
 }
