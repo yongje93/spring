@@ -1,5 +1,6 @@
 package member.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import member.bean.MemberDTO;
+import member.bean.ZipcodeDTO;
 
 @Repository("memberDAO")
 @Transactional
@@ -17,7 +19,7 @@ public class MemberDAOMybatis implements MemberDAO {
 	
 	@Override
 	public void write(MemberDTO memberDTO) {
-		
+		sqlSession.insert("memberSQL.write", memberDTO);
 	}
 
 	@Override
@@ -31,13 +33,18 @@ public class MemberDAOMybatis implements MemberDAO {
 	}
 
 	@Override
-	public boolean isExistId(String id) {
-		return false;
+	public MemberDTO getMember(String id) {
+		return null;
 	}
 
 	@Override
-	public MemberDTO getMember(String id) {
-		return null;
+	public MemberDTO checkId(String id) {
+		return sqlSession.selectOne("memberSQL.checkId", id);
+	}
+
+	@Override
+	public List<ZipcodeDTO> getZipcodeList(Map<String, String> map) {
+		return sqlSession.selectList("memberSQL.getZipcodeList", map);
 	}
 
 }

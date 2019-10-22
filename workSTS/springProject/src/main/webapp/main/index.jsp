@@ -15,6 +15,7 @@
  	padding: 10px;
  }
 </style>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 </head>
 <body>
 	<table border="1" width="100%" cellspacing="0" cellpadding="5">
