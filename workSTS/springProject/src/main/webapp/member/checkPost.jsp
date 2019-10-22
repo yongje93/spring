@@ -49,20 +49,6 @@
       <td width="80" align="center">우편번호</td>
       <td colspan="3" align="center">주소</td>
     </tr>
-    <c:if test="${requestScope.list != null}">
-    	<c:forEach var="zipcodeDTO" items="${requestScope.list }">
-    	<c:set var="address" value="${zipcodeDTO.sido
-    								 } ${zipcodeDTO.sigungu
-    								 } ${zipcodeDTO.yubmyundong
-    								 } ${zipcodeDTO.ri
-    								 } ${zipcodeDTO.roadname
-    								 } ${zipcodeDTO.buildingname}"/>
-    		<tr>
-    			<td align="center">${zipcodeDTO.zipcode }</td>
-    			<td colspan="3"><a id="addressA" href="#" onclick="checkPostClose('${zipcodeDTO.zipcode }','${address }')"> ${address }</a></td>	
-    		</tr>
-    	</c:forEach>
-    </c:if>
   </table>
 </form>    
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

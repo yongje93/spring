@@ -148,36 +148,17 @@ $("#postSearchBtn").click(function(){
 	});
 });
 
-$("#addressA").on('click','a',function(){
-//	$('#daum_zipcode').val($(this).text());
-//	$('#daum_addr1').val($(this).parent().parent().children(':first-child').text());
-//	window.close();
-//	$('#daum_addr2').focus();
+// 주소 검색 후 창닫기
+$("#postTable").on("click", "a" ,function(){
+	var aBtn = $(this);
+	var tr = aBtn.parent().parent();
+	var td = tr.children();
 	
-	opener.document.getElementById("daum_zipcode").value = $(this).parent().parent().children(':first-child').text();
-	opener.document.getElementById("daum_addr1").value = $(this).text();
+	opener.document.getElementById("daum_zipcode").value = td.eq(0).text();
+	opener.document.getElementById("daum_addr1").value = td.eq(1).text();
 	window.close();
 	opener.document.getElementById("daum_addr2").focus();
 });
-
-// 주소 검색 후 창닫기
-function checkPostClose(zipcode, address) {
-//	opener.writeForm.zipcode.value = zipcode;
-//	opener.writeForm.addr1.value = address;
-//	window.close();
-//	opener.writeForm.addr2.focus();
-	
-//	opener.document.forms[0].zipcode.value = zipcode;
-//	opener.document.forms[0].addr1.value = address;
-//	window.close();
-//	opener.document.forms[0].addr2.focus();
-	
-	opener.document.getElementById("daum_zipcode").value = zipcode;
-	opener.document.getElementById("daum_addr1").value = address;
-	window.close();
-	opener.document.getElementById("daum_addr2").focus();
-	
-}
 
 // 회원정보수정 할 때 유효성 검사
 function checkModify() {
