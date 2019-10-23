@@ -10,7 +10,7 @@ import member.bean.MemberDTO;
 import member.bean.ZipcodeDTO;
 import member.dao.MemberDAO;
 
-@Service(value="memberService")
+@Service
 public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private MemberDAO memberDAO;

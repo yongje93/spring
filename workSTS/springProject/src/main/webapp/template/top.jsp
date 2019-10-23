@@ -4,7 +4,7 @@
 
 <h3>
 <img src="../image/brown.png" width="50" height="50" onclick="location.href='/springProject/main/index'" style="cursor: pointer;">
-MVC를 이용한 미니프로젝트</h3>
+Spring을 이용한 미니프로젝트</h3>
 
 <font size="2">
 <c:if test="${memId != null}">

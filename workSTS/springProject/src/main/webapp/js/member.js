@@ -31,7 +31,7 @@ $("#loginBtn").click(function(){
 // 로그아웃 버튼
 $("#logoutBtn").click(function(){
 	$.ajax({
-		type: "post",
+		type: "get",
 		url: "/springProject/member/logout",
 		success: function(){
 			location.href="/springProject/main/index";
@@ -68,8 +68,7 @@ $("#writeBtn").click(function(){
 			url : "/springProject/member/write",
 			data : $("#writeForm").serialize(),
 			success : function(){
-				alert(
-						"회원가입 성공!");
+				alert("회원가입 성공!");
 				location.href="/springProject/main/index";
 			},
 			error : function(e){
@@ -116,48 +115,63 @@ $("#postBtn").click(function(){
 });
 
 $("#postSearchBtn").click(function(){
-	$.ajax({
-		type : "post",
-		url : "/springProject/member/postList",
-		data :  {"sido" : $("#sido option:selected").val(), "sigungu" : $("#sigungu").val(), "roadname" : $("#roadname").val()},
-		dataType : "json",
-		success : function(data) {
-			//alert(JSON.stringify(data));
-			$.each(data.list, function(index, items){
-				if(items.ri == null) items.ri = "";
-				if(items.buildingname == null) items.buildingname = "";
-				var address = items.sido +" "+ items.sigungu +" "+ items.yubmyundong +" "+ items.ri +" "+ items.roadname +" "+ items.buildingname
-				$("<tr/>").append($("<td/>",{
-					align : "center",
-					text : items.zipcode
-				})).append($("<td/>",{
-					colspan : 3,
-					align : "left"
-				}).append($("<a/>",{
-					id: "addressA",
-					href : "#",
-					text : address,
-				}))).appendTo("#postTable");
+	$("#sidoDiv").empty();
+	$("#sigunguDiv").empty();
+	$("#roadnameDiv").empty();
 
-			});
-		},
-		error : function(e){
-			console.log(e);
-			alert("실패");
-		}
-	});
-});
-
-// 주소 검색 후 창닫기
-$("#postTable").on("click", "a" ,function(){
-	var aBtn = $(this);
-	var tr = aBtn.parent().parent();
-	var td = tr.children();
-	
-	opener.document.getElementById("daum_zipcode").value = td.eq(0).text();
-	opener.document.getElementById("daum_addr1").value = td.eq(1).text();
-	window.close();
-	opener.document.getElementById("daum_addr2").focus();
+	if($("#sido").val()=="시도선택") 
+		$("#sidoDiv").text("시도를 선택하세요").css("color", "red").css("font-size","8pt");
+	else if($("#sido").val()!="세종" && $("#sigungu").val()=="")
+		$("#sigunguDiv").text("시군구를 입력하세요").css("color", "red").css("font-size","8pt");
+	else if($("#roadname").val()=="")
+		$("#roadnameDiv").text("도로명을 입력하세요").css("color", "red").css("font-size","8pt");
+	else {
+		$.ajax({
+			type : "post",
+			url : "/springProject/member/postList",
+			data :  $("#postSearchForm").serialize(),
+			dataType : "json",
+			success : function(data){
+				//alert(JSON.stringify(data));
+				$("#postTable tr:gt(2)").remove();
+				
+				$.each(data.list, function(index, items){
+					var address = items.sido +" "+ items.sigungu +" "+ items.yubmyundong +" "+ items.ri +" "+ items.roadname +" "+ items.buildingname;
+					
+					address = address.replace(/null/g, "");	// g는 정규표현식. 발생하는 모든 pattern에 대한 전역 검색
+					
+					$("<tr/>").append($("<td/>",{
+						align : "center",
+						text : items.zipcode
+					})).append($("<td/>",{
+						colspan : 3,
+						align : "left"
+						}).append($("<a/>",{
+							id : "addressA",
+							href : "#",
+							text : address,
+						}))
+					).appendTo("#postTable");
+				}); //each
+				
+				// 주소 검색후 창닫기
+				$("a").click(function(){
+					//alert($(this).prop("tagName"));
+					//alert($(this).text());	// 주소
+					//alert($(this).parent().prev().text()); // 우편번호
+					
+					$("#daum_zipcode", opener.document).val($(this).parent().prev().text());
+					$("#daum_addr1", opener.document).val($(this).text());
+					window.close();
+					$("#daum_addr2", opener.document).focus();
+				});
+			},
+			error : function(e){
+				console.log(e);
+				alert("실패");
+			}
+		});
+	}
 });
 
 // 회원정보수정 할 때 유효성 검사

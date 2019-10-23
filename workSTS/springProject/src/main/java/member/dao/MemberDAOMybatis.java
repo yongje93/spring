@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import member.bean.MemberDTO;
 import member.bean.ZipcodeDTO;
 
-@Repository("memberDAO")
+@Repository
 @Transactional
 public class MemberDAOMybatis implements MemberDAO {
 	@Autowired

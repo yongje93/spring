@@ -10,6 +10,7 @@
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	<context:component-scan base-package="main.controller"/>
 	<context:component-scan base-package="member.controller"/>
+	<context:component-scan base-package="board.controller"/>
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
 
@@ -32,6 +33,6 @@
 		<beans:property name="order" value="0"/>
 	</beans:bean>
 	
-	<context:component-scan base-package="com.spring.springProject" />
+	<context:component-scan base-package="com.spring.springProject"/>
 	
 </beans:beans>

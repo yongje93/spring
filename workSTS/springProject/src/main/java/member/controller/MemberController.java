@@ -20,11 +20,12 @@ import member.bean.ZipcodeDTO;
 import member.service.MemberService;
 
 @Controller
+@RequestMapping(value="member")
 public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
-	@RequestMapping(value="/member/login", method=RequestMethod.POST)
+	@RequestMapping(value="login", method=RequestMethod.POST)
 	@ResponseBody
 	public String login(@RequestParam String id, @RequestParam String pwd, HttpSession session) {
 		Map<String, String> map = new HashMap<String, String>();
@@ -47,13 +48,13 @@ public class MemberController {
 		return loginResult;
 	}
 	
-	@RequestMapping(value="/member/logout", method=RequestMethod.POST)
-	@ResponseBody
-	public void logout(HttpSession session) {
+	@RequestMapping(value="logout", method=RequestMethod.GET)
+	public ModelAndView logout(HttpSession session) {
 		session.invalidate();
+		return new ModelAndView("redirect:/main/index"); // 페이지 이동 // ajax로는 redirect 안됨.
 	}
 	
-	@RequestMapping(value="/member/writeForm", method=RequestMethod.GET)
+	@RequestMapping(value="writeForm", method=RequestMethod.GET)
 	public ModelAndView writeForm() {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("display", "/member/writeForm.jsp");
@@ -61,13 +62,19 @@ public class MemberController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/member/write", method=RequestMethod.POST)
+//	@RequestMapping(value="writeForm", method=RequestMethod.GET)
+//	public String writeForm(Model model) {
+//		model.addAttribute("display", "/member/writeForm.jsp");
+//		return "/main/index";
+//	}
+	
+	@RequestMapping(value="write", method=RequestMethod.POST)
 	@ResponseBody
 	public void write(@ModelAttribute MemberDTO memberDTO) {
 		memberService.write(memberDTO);
 	}
 	
-	@RequestMapping(value="/member/checkId", method=RequestMethod.POST)
+	@RequestMapping(value="checkId", method=RequestMethod.POST)
 	@ResponseBody
 	public String checkId(@RequestParam String id) {
 		MemberDTO memberDTO = memberService.checkId(id);
@@ -79,27 +86,19 @@ public class MemberController {
 		}
 	}
 	
-	@RequestMapping(value="/member/checkPost", method=RequestMethod.GET)
+	@RequestMapping(value="checkPost", method=RequestMethod.GET)
 	public ModelAndView checkPost() {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/member/checkPost");
 		return mav;
 	}
 	
-	@RequestMapping(value="/member/postList", method=RequestMethod.POST)
+	@RequestMapping(value="postList", method=RequestMethod.POST)
 	@ResponseBody
-	public ModelAndView postList(@RequestParam String sido, @RequestParam String sigungu, @RequestParam String roadname) {
-		
+	public ModelAndView postList(@RequestParam Map<String, String> map) {
 		ModelAndView mav = new ModelAndView();
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("sido", sido);
-		map.put("sigungu", sigungu);
-		map.put("roadname", roadname);
+		List<ZipcodeDTO> list = memberService.getZipcodeList(map);
 		
-		List<ZipcodeDTO> list = null;
-		if(sido != null && roadname!= null) {
-			list = memberService.getZipcodeList(map);
-		}
 		mav.addObject("list", list);
 		mav.setViewName("jsonView");
 		return mav;

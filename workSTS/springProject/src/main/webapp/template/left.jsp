@@ -8,6 +8,3 @@
 <c:if test="${memId != null}">
 	<jsp:include page="../member/loginOk.jsp"/>
 </c:if>
-<c:if test="${memId == null && loginResult == 'fail' }">
-	<jsp:include page="../member/loginFail.jsp"/>
-</c:if>
