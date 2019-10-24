@@ -103,4 +103,20 @@ public class MemberController {
 		mav.setViewName("jsonView");
 		return mav;
 	}
+	
+	@RequestMapping(value="modifyForm", method=RequestMethod.GET)
+	public ModelAndView modifyForm(@RequestParam String id) {
+		MemberDTO memberDTO = memberService.getMember(id);
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("memberDTO", memberDTO);
+		mav.addObject("display", "/member/modifyForm.jsp");
+		mav.setViewName("/main/index");
+		return mav;
+	}
+	
+	@RequestMapping(value="modify", method=RequestMethod.POST)
+	@ResponseBody
+	public void modify(@ModelAttribute MemberDTO memberDTO) {
+		memberService.modify(memberDTO);
+	}
 }

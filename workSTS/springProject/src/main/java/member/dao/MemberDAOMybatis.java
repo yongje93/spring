@@ -24,7 +24,7 @@ public class MemberDAOMybatis implements MemberDAO {
 
 	@Override
 	public void modify(MemberDTO memberDTO) {
-		
+		sqlSession.update("memberSQL.update", memberDTO);
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class MemberDAOMybatis implements MemberDAO {
 
 	@Override
 	public MemberDTO getMember(String id) {
-		return null;
+		return sqlSession.selectOne("memberSQL.getMember", id);
 	}
 
 	@Override

@@ -114,6 +114,7 @@ $("#postBtn").click(function(){
 	window.open("/springProject/member/checkPost","","width=500 height=500 left=500 top=250 scrollbars=yes");
 });
 
+// 우편번호 찾기
 $("#postSearchBtn").click(function(){
 	$("#sidoDiv").empty();
 	$("#sigunguDiv").empty();
@@ -151,7 +152,7 @@ $("#postSearchBtn").click(function(){
 							href : "#",
 							text : address,
 						}))
-					).appendTo("#postTable");
+					).appendTo($("#postTable"));
 				}); //each
 				
 				// 주소 검색후 창닫기
@@ -174,20 +175,35 @@ $("#postSearchBtn").click(function(){
 	}
 });
 
-// 회원정보수정 할 때 유효성 검사
-function checkModify() {
-	if(document.modifyForm.name.value == "") {
-		alert("이름을 입력하세요");
-		document.modifyForm.name.focus();
-	} else if(document.modifyForm.pwd.value == "") {
-		alert("비밀번호를 입력하세요");
-		document.modifyForm.pwd.focus();
-	} else if(document.modifyForm.repwd.value == "") {
-		alert("비밀번호를 입력하세요");
-		document.modifyForm.repwd.focus();
-	} else if (document.modifyForm.pwd.value != document.modifyForm.repwd.value) {
-		alert("비밀번호가 맞지 않습니다");
+// 회원정보수정
+$("#modifyBtn").click(function(){
+	$("#modifyBtn div").empty();
+	
+	if($("#name").val() == "") {
+		$("#nameDiv").text("이름을 입력하세요").css("color", "tomato").css("font-size","8pt");
+		$("#name").focus();
+	} else if($("#pwd").val() == "") {
+		$("#pwdDiv").text("비밀번호를 입력하세요").css("color", "tomato").css("font-size","8pt");
+		$("#pwd").focus();
+	} else if($("#repwd").val() == "") {
+		$("#repwdDiv").text("비밀번호를 입력하세요").css("color", "tomato").css("font-size","8pt");
+		$("#repwd").focus();
+	} else if($("#pwd").val() != $("#repwd").val()) {
+		$("#repwdDiv").text("비밀번호가 맞지 않습니다").css("color", "tomato").css("font-size","8pt");
+		$("#repwd").focus();
 	} else {
-		document.modifyForm.submit();
+		$.ajax({
+			type : "post",
+			url : "/springProject/member/modify",
+			data :  $("#modifyForm").serialize(),
+			success : function(){
+				alert("회원정보 수정완료!");
+				location.href="/springProject/member/logout";
+			},
+			error : function(e){
+				console.log(e);
+				alert("실패");
+			}
+		});
 	}
-}
+});

@@ -14,5 +14,5 @@ Spring을 이용한 미니프로젝트</h3>
 	</c:if>
 	<a href="/springProject/imageboard/imageboardList?pg=1">이미지 목록</a>&emsp;
 </c:if>
-<a href="/springProject/board/boardList?pg=1">목록</a>&emsp;
+<a href="/springProject/board/boardList">목록</a>&emsp;
 </font>

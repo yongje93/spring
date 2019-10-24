@@ -22,7 +22,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public void modify(MemberDTO memberDTO) {
-		
+		memberDAO.modify(memberDTO);
 	}
 
 	@Override
@@ -32,7 +32,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MemberDTO getMember(String id) {
-		return null;
+		return memberDAO.getMember(id);
 	}
 
 	@Override

@@ -1,32 +1,41 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<form name="modifyForm" method="post" action="/springProject/member/modify">
+<form id="modifyForm" name="modifyForm" method="post" action="/springProject/member/modify">
    <h1>회원정보수정</h1>
    <table border="1" cellspacing="0" cellpadding="5">
      <tr>
        <th width="80">이름</th>
-       <td><input type="text" id="name" name="name" size="15" value="${requestScope.memberDTO.getName() }"></td>
+       <td>
+       	<input type="text" id="name" name="name" size="15" value="${memberDTO.name }">
+        <div id="nameDiv"></div>
+       </td>
      </tr>
      <tr>
        <th width="80">아이디</th>
        <td>
-       	<input type="text" id="id" name="id" value="${memberDTO.id }" style="width: 200px;" readonly>
+       	<input type="text" id="modifyId" name="id" value="${memberDTO.id }" style="width: 200px;" readonly>
        </td>
      </tr>
      <tr>
        <th width="80">비밀번호</th>
-       <td><input type="password" id="pwd" name="pwd" style="width: 230px;"></td>
+       <td>
+       	<input type="password" id="pwd" name="pwd" style="width: 230px;">
+       	<div id="pwdDiv"></div>
+       </td>
      </tr>
      <tr>
        <th width="80">재확인</th>
-       <td><input type="password" id="repwd" name="repwd" style="width: 230px;"></td>
+       <td>
+       	<input type="password" id="repwd" name="repwd" style="width: 230px;">
+       	<div id="repwdDiv"></div>
+       </td>
      </tr>
      <tr>
        <th width="80">성별</th>
        <td>
-         <input type="radio" name="gender" value="0">남&nbsp;
-         <input type="radio" name="gender" value="1">여
+         <input type="radio" id="gender_0" name="gender" value="0">남&nbsp;
+         <input type="radio" id="gender_1" name="gender" value="1">여
        </td>
      </tr>
      <tr>
@@ -61,14 +70,14 @@
        <th width="80">주소</th>
        <td>
          <input type="text" name="zipcode" id="daum_zipcode" value="${memberDTO.zipcode }" style="width: 70px;" readonly>
-         <input type="button" value="우편번호검색" onclick="checkPost()"><br>
+         <input type="button" id="postBtn" value="우편번호검색"><br>
          <input type="text" name="addr1" id="daum_addr1" placeholder="주소" value="${memberDTO.addr1 }" style="width: 350px;" readonly><br>
          <input type="text" name="addr2" id="daum_addr2" placeholder="상세 주소" value="${memberDTO.addr2 }" style="width: 350px;">
        </td>
      </tr>
      <tr>
        <td colspan="2" align="center">
-         <input type="button" value="회원정보수정" onclick="checkModify()">
+         <input type="button" id="modifyBtn" value="회원정보수정">
          <input type="reset" value="다시작성">
        </td>
      </tr>
@@ -76,13 +85,9 @@
 </form>
 <script type="text/javascript" src="../js/member.js"></script>
 <script type="text/javascript">
-window.onload = function() {
-	document.modifyForm.gender['${memberDTO.gender }'].checked = true;
-	
-	//document.modifyForm.email2.value = '${memberDTO.email2 }';
-	document.getElementById("email22").value = '${memberDTO.email2 }';
-	
-	//document.modifyForm.tel1.value = '${memberDTO.tel1 }';
-	document.getElementById("tel11").value = '${memberDTO.tel1 }';
-}
+$(document).ready(function(){
+	$("#gender_"+"${memberDTO.gender}").prop("checked", true);
+	$("#email22").val("${memberDTO.email2}");
+	$("#tel11").val("${memberDTO.tel1}");	
+});
 </script>

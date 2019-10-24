@@ -10,15 +10,15 @@
   	</insert>
   	 
   	<!-- 게시판 목록 -->
-  	<select id="boardList" parameterType="java.util.Map" resultType="board">
+  	<select id="getBoardList" parameterType="java.util.Map" resultType="board">
 		select * from 
 		(select rownum rn, tt.* from 
 		(select * from board order by ref desc, step asc)tt)
 		 where rn between #{startNum} and #{endNum}	
 		<!-- <![CDATA[
-			select * from 
+			select * from
 			(select rownum rn, tt.* from 
-			(select seq,id,name,email,subject,content,ref,lev,step,pseq,reply,hit,to_char(logtime, 'YYYY.MM.DD') as logtime from board order by ref desc, step asc)tt) 
+			(select * from board order by ref desc, step asc)tt) 
 			where rn >= #{startNum} and rn <= #{endNum}	
 		]]> -->
   	</select>
@@ -86,7 +86,7 @@
   		<![CDATA[
   			select * from 
   			(select rownum rn, tt.* from 
- 			(select seq,id,name,email,subject,content,ref,lev,step,pseq,reply,hit,to_char(logtime, 'YYYY.MM.DD') as logtime from board
+ 			(select * from board
  			where ${opt} like '%'|| #{condition} ||'%'
  			order by ref desc, step asc)tt) 
  			where rn >= #{startNum} and rn <= #{endNum}	
