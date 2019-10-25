@@ -19,7 +19,7 @@
 <div id="boardPagingDiv" style="float: left; width: 850px; text-align: center;"></div>
 <br><br>
 <div style="float: left; width: 850px; text-align: center;">
-	<form name="searchFrom" method="post">
+	<form id="searchFrom" method="post">
 		<input type="hidden" name="pg" value="1">
 		<select name="opt" id="opt" style="width: 80px;">
 			<option value="subject">제목</option>
@@ -37,7 +37,9 @@ window.onload=function(){
 		document.getElementById("opt").value = "${opt}";
 }
 
-function boardSearch(pg) {
-	location.href="/miniproject/board/boardSearch?pg="+pg+"&opt=${opt}&condition="+encodeURIComponent("${condition}");
+function boardSearch(pg) {	//get 방식이다 이거는 
+	/* location.href="/springProject/board/boardSearch?pg="+pg+"&opt=${opt}&condition="+encodeURIComponent("${condition}"); */
+	$("input[name=pg]").val(pg);
+	$("#searchBtn").trigger("click", "trigger"); //trigger는 이벤트를 발생시킨다.
 }
 </script>

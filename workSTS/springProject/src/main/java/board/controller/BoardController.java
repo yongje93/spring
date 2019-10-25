@@ -50,7 +50,7 @@ public class BoardController {
 	public String boardList(@RequestParam(required=false, defaultValue="1") String pg, Model model) {	//1페이지 일때는 주소로 안넣고, default를 1로함. 나머지 페이지는 주소에 써서보냄
 		model.addAttribute("pg", pg);
 		model.addAttribute("display", "/board/boardList.jsp");
-		return "/main/index";
+		return "/main/index"; 
 	}
 	
 	@RequestMapping(value="getBoardList", method=RequestMethod.POST)
@@ -100,38 +100,69 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="boardSearch", method=RequestMethod.POST)
-	public ModelAndView boardSearch(@RequestParam String pg, @RequestParam String opt, @RequestParam String condition, HttpSession session) {
-		String memId = (String) session.getAttribute("memId");
-		
+	public ModelAndView boardSearch(@RequestParam Map<String, String> map) {		
 		// 1페이지당 5개씩
-		int endNum = Integer.parseInt(pg) * 5;
+		int endNum = Integer.parseInt(map.get("pg")) * 5;
 		int startNum = endNum - 4;
 		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("startNum", startNum);
-		map.put("endNum", endNum);
-		map.put("opt", opt);
-		map.put("condition", condition);
+		map.put("startNum", startNum+"");
+		map.put("endNum", endNum+"");
 		
-		List<BoardDTO> boardSearchList = boardService.boardSearch(map);
+		List<BoardDTO> list = boardService.boardSearch(map);
 		
 		// 페이징 처리
 		int totalA = boardService.getSearchTotalA(map);
-		boardPaging.setCurrentPage(Integer.parseInt(pg));
+		boardPaging.setCurrentPage(Integer.parseInt(map.get("pg")));
 		boardPaging.setPageBlock(3);
 		boardPaging.setPageSize(5);
 		boardPaging.setTotalA(totalA);
 		boardPaging.makeSearchPagingHTML();
 		
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("memId", memId);
-		mav.addObject("pg", pg);
-		mav.addObject("opt", opt);
-		mav.addObject("condition", condition);
-		mav.addObject("boardSearchList", boardSearchList);
+		mav.addObject("list", list);
+		mav.addObject("opt", map.get("opt"));
+		mav.addObject("condition", map.get("condition"));
 		mav.addObject("boardPaging", boardPaging);
 		mav.setViewName("jsonView");
 		return mav;
 	}
 	
+	@RequestMapping(value="boardReplyForm", method=RequestMethod.POST)
+	public ModelAndView boardReplyForm(@RequestParam int seq, @RequestParam int pg) {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("pseq", seq);
+		mav.addObject("pg", pg);
+		mav.addObject("display", "/board/boardReplyForm.jsp");
+		mav.setViewName("/main/index");
+		return mav;
+	}
+	
+	@RequestMapping(value="boardReply", method=RequestMethod.POST)
+	@ResponseBody
+	public void boardReply(@ModelAttribute BoardDTO boardDTO, HttpSession session) {
+		boardDTO.setId((String)session.getAttribute("memId"));
+		boardDTO.setName((String)session.getAttribute("memName"));
+		boardDTO.setEmail((String)session.getAttribute("memEmail"));
+		
+		boardService.boardReply(boardDTO);
+	}
+	
+	@RequestMapping(value="boardModifyForm", method=RequestMethod.POST)
+	public ModelAndView boardModifyForm(@RequestParam int seq, @RequestParam int pg) {
+		BoardDTO boardDTO = boardService.getBoard(seq);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("boardDTO", boardDTO);
+		mav.addObject("seq", seq);
+		mav.addObject("pg", pg);
+		mav.addObject("display", "/board/boardModifyForm.jsp");
+		mav.setViewName("/main/index");
+		return mav;
+	}
+	
+	@RequestMapping(value="boardModify", method=RequestMethod.POST)
+	@ResponseBody
+	public void boardModify(@ModelAttribute BoardDTO boardDTO, HttpSession session) {
+		boardService.boardModify(boardDTO);
+	}
 }

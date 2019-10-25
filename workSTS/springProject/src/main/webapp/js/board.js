@@ -86,8 +86,10 @@ $(document).ready(function(){
 });
 
 // 검색
-$("#searchBtn").click(function(){
+$("#searchBtn").click(function(event, str){
 	$("#searchDiv").empty();
+	
+	if(str != "trigger") $("input[name=pg]").val(1);
 	
 	if($("#condition").val() == "") {
 		$("#searchDiv").text("검색어를 입력하세요").css("color", "tomato");
@@ -96,12 +98,12 @@ $("#searchBtn").click(function(){
 		$.ajax({
 			type : "post",
 			url : "/springProject/board/boardSearch",
-			data : {"pg" : $("input[name=pg]").val(), "opt" : $("#opt").val(), "condition" : $("#condition").val()},
+			data : $("#searchFrom").serialize(), //serialize()은 name 속성을 가지고감.
 			dataType : "json",
 			success : function(data) {
 				//alert(data.boardSearchList);
 				$("#boardListTable tr:gt(0)").remove();
-				$.each(data.boardSearchList, function(index, items){
+				$.each(data.list, function(index, items){
 					$("<tr/>").append($("<td/>", {
 						align : "center",
 						text : items.seq
@@ -129,6 +131,60 @@ $("#searchBtn").click(function(){
 			error : function(e){
 				console.log(e);
 				alert("실패");
+			}
+		});
+	}
+});
+
+// 답글
+$("#replyBtn").click(function(){
+	$("#subjectDiv").empty();
+	$("#contentDiv").empty();
+	
+	if($("#subject").val() == "") {
+		$("#subjectDiv").text("제목을 입력하세요").css("color", "tomato").css("font-size","8pt");
+		$("#subject").focus();
+	} else if($("#content").val() == "") {
+		$("#contentDiv").text("내용을 입력하세요").css("color", "tomato").css("font-size","8pt");
+		$("#content").focus();
+	} else {
+		$.ajax({
+			type : "post",
+			url : "/springProject/board/boardReply",
+			data : $("#boardReplyForm").serialize(),
+			success : function(){
+				alert("답글쓰기 성공");
+				location.href="/springProject/board/boardList?pg="+$("input[name=pg]").val();
+			}, 
+			error : function(err) {
+				console.log(err);
+			}
+		});
+	}
+});
+
+// 수정
+$("#modifyBtn").click(function(){
+	$("#subjectDiv").empty();
+	$("#contentDiv").empty();
+	
+	if($("#subject").val() == "") {
+		$("#subjectDiv").text("제목을 입력하세요").css("color", "tomato").css("font-size","8pt");
+		$("#subject").focus();
+	} else if($("#content").val() == "") {
+		$("#contentDiv").text("내용을 입력하세요").css("color", "tomato").css("font-size","8pt");
+		$("#content").focus();
+	} else {
+		$.ajax({
+			type : "post",
+			url : "/springProject/board/boardModify",
+			data : $("#boardModifyForm").serialize(),
+			success : function(){
+				alert("글수정 성공");
+				location.href="/springProject/board/boardList?pg="+$("input[name=pg]").val();
+			}, 
+			error : function(err) {
+				console.log(err);
 			}
 		});
 	}

@@ -10,6 +10,8 @@ public interface BoardDAO {
 	public List<BoardDTO> getBoardList(Map<String, Integer> map);
 	public int getTotalA();
 	public BoardDTO getBoard(int seq);
-	public List<BoardDTO> boardSearch(Map<String, Object> map);
-	public int getSearchTotalA(Map<String, Object> map);
+	public List<BoardDTO> boardSearch(Map<String, String> map);
+	public int getSearchTotalA(Map<String, String> map);
+	public void boardReply(BoardDTO boardDTO);
+	public void boardModfiy(BoardDTO boardDTO);
 }

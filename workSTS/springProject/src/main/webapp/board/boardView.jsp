@@ -5,9 +5,10 @@
 	#subject { font-size: 30px; font-weight: bold;}
 	pre { overflow: auto; width: 100%; height: 150px; white-space: pre-line; word-break: break-all; }
 </style>
-<input type="hidden" id="seq" value="${seq}">
-<input type="hidden" id="pg" value="${pg}">
 
+<form name="boardViewForm">
+<input type="hidden" name="seq" id="seq" value="${seq}">
+<input type="hidden" name="pg" id="pg" value="${pg}">
 <table border="1" width="450" frame="hsides" rules="rows" cellspacing="0" cellpadding="5">
 	<tr>
 		<td id="subject" colspan="5"><span id="subjectDiv"></span></td>
@@ -26,13 +27,31 @@
 	</tr>
 	<tr>
 </table>
+</form>
 <br>
 <input type="button" value="목록" onclick="location.href='/springProject/board/boardList?pg=${pg}'">
-<input type="button" value="답글" onclick="location.href='/springProject/board/boardReplyForm?pseq=${boardDTO.seq}&pg=${pg }'">
+<input type="button" value="답글" onclick="mode(3)">
 <span id="updateAndDeleteSpan">
-	<input type="button" value="글수정" onclick="location.href='/springProject/board/boardModifyForm?seq=${boardDTO.seq}&pg=${pg }'">
-	<input type="button" value="글삭제" onclick="checkBoardDelete(${boardDTO.seq})">
+	<input type="button" value="글수정" onclick="mode(1)">
+	<input type="button" value="글삭제" onclick="mode(2)">
 </span>
+<script type="text/javascript">
+function mode(num) {
+	if(num == 1) {
+		document.boardViewForm.method = "post";
+		document.boardViewForm.action = "/springProject/board/boardModifyForm";
+		document.boardViewForm.submit();
+	} else if(num == 2) {
+		document.boardViewForm.method = "post";
+		document.boardViewForm.action = "/springProject/board/boardDelete";
+		document.boardViewForm.submit();
+	} else if(num == 3) {
+		document.boardViewForm.method = "post";
+		document.boardViewForm.action = "/springProject/board/boardReplyForm";
+		document.boardViewForm.submit();
+	}
+}
+</script>
 <script type="text/javascript" src="../js/board.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
