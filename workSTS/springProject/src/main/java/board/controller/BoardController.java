@@ -165,4 +165,8 @@ public class BoardController {
 	public void boardModify(@ModelAttribute BoardDTO boardDTO, HttpSession session) {
 		boardService.boardModify(boardDTO);
 	}
+	
+	
+	// summernote 테스트
+	
 }
