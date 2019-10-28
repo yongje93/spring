@@ -14,4 +14,5 @@ public interface BoardDAO {
 	public int getSearchTotalA(Map<String, String> map);
 	public void boardReply(BoardDTO boardDTO);
 	public void boardModfiy(BoardDTO boardDTO);
+	public void boardDelete(int seq);
 }

@@ -128,7 +128,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="boardReplyForm", method=RequestMethod.POST)
-	public ModelAndView boardReplyForm(@RequestParam int seq, @RequestParam int pg) {
+	public ModelAndView boardReplyForm(@RequestParam String seq, @RequestParam String pg) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("pseq", seq);
 		mav.addObject("pg", pg);
@@ -148,8 +148,8 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value="boardModifyForm", method=RequestMethod.POST)
-	public ModelAndView boardModifyForm(@RequestParam int seq, @RequestParam int pg) {
-		BoardDTO boardDTO = boardService.getBoard(seq);
+	public ModelAndView boardModifyForm(@RequestParam String seq, @RequestParam String pg) {
+		BoardDTO boardDTO = boardService.getBoard(Integer.parseInt(seq));
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("boardDTO", boardDTO);
@@ -167,6 +167,12 @@ public class BoardController {
 	}
 	
 	
-	// summernote 테스트
+	@RequestMapping(value="boardDelete", method=RequestMethod.POST)
+	public String boardDelete(@RequestParam String seq, Model model) {
+		boardService.boardDelete(Integer.parseInt(seq));
+		model.addAttribute("pg", 1);
+		model.addAttribute("display", "/board/boardList.jsp");
+		return "/main/index"; 
+	}
 	
 }

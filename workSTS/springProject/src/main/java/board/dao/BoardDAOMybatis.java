@@ -65,4 +65,9 @@ public class BoardDAOMybatis implements BoardDAO {
 		sqlSession.update("boardSQL.boardModify", boardDTO);
 	}
 
+	@Override
+	public void boardDelete(int seq) {
+		sqlSession.delete("boardSQL.boardDelete", seq);
+	}
+
 }

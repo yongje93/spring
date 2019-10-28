@@ -11,18 +11,18 @@
 <input type="hidden" name="pg" id="pg" value="${pg}">
 <table border="1" width="450" frame="hsides" rules="rows" cellspacing="0" cellpadding="5">
 	<tr>
-		<td id="subject" colspan="5"><span id="subjectDiv"></span></td>
+		<td id="subject" colspan="5"><span id="subjectSpan"></span></td>
 	</tr>
 	<tr>
-		<td width="150">글번호 : <span id="seqDiv"></span></td>
+		<td width="150">글번호 : <span id="seqSpan"></span></td>
 		<td width="30"></td>
-		<td width="150">작성자 : <span id="idDiv"></span></td>
+		<td width="150">작성자 : <span id="idSpan"></span></td>
 		<td width="30"></td>
-		<td width="90">조회수 : <span id="hitDiv"></span></td>
+		<td width="90">조회수 : <span id="hitSpan"></span></td>
 	</tr>
 	<tr>
 		<td id="content" colspan="5" valign="top">
-		<pre><span id="contentDiv"></span></pre>
+		<pre><span id="contentSpan"></span></pre>
 		</td>
 	</tr>
 	<tr>
@@ -65,11 +65,11 @@ $(document).ready(function(){
 		success : function(data){
 			//alert(JSON.stringify(data));
 			
-			$("#subjectDiv").text(data.boardDTO.subject);
-			$("#seqDiv").text(data.boardDTO.seq);
-			$("#idDiv").text(data.boardDTO.id);
-			$("#hitDiv").text(data.boardDTO.hit);
-			$("#contentDiv").text(data.boardDTO.content);
+			$("#subjectSpan").text(data.boardDTO.subject);
+			$("#seqSpan").text(data.boardDTO.seq);
+			$("#idSpan").text(data.boardDTO.id);
+			$("#hitSpan").text(data.boardDTO.hit);
+			$("#contentSpan").text(data.boardDTO.content);
 			
 			if(data.boardDTO.id == "${memId}") 
 				$("#updateAndDeleteSpan").show();

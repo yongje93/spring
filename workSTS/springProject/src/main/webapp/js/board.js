@@ -62,6 +62,16 @@ $(document).ready(function(){
 					align : "center",
 					text : items.hit
 				})).appendTo($("#boardListTable"));
+				
+				// 답글 				
+				for(i = 0; i<items.lev; i++) {
+					$("."+items.seq).before("&emsp;");	// 내 태그의 앞부분
+				}// for
+				if(items.pseq != 0) {
+					$("."+items.seq).before($("<img/>",{
+						src: "../image/reply.gif"
+					}));
+				}
 			});
 			
 			// 페이징처리
@@ -111,9 +121,10 @@ $("#searchBtn").click(function(event, str){
 						
 					}).append($("<a/>", {
 						href : "javascript:void(0)",
+						text : items.subject,
 						id : "subjectA",
-						class: items.seq+"",
-						text : items.subject
+						class: items.seq+""
+						
 					}))).append($("<td/>", {
 						align : "center",
 						text : items.id
@@ -124,7 +135,17 @@ $("#searchBtn").click(function(event, str){
 						align : "center",
 						text : items.hit
 					})).appendTo($("#boardListTable"));
-				});
+				
+					// 답글 				
+					for(i = 0; i<items.lev; i++) {
+						$("."+items.seq).before("&emsp;");	// 내 태그의 앞부분
+					}// for
+					if(items.pseq != 0) {
+						$("."+items.seq).before($("<img/>",{
+							src: "../image/reply.gif"
+						}));
+					}
+				}); // each
 				// 페이징처리
 				$("#boardPagingDiv").html(data.boardPaging.pagingHTML);
 			},

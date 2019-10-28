@@ -14,4 +14,5 @@ public interface BoardService {
 	public int getSearchTotalA(Map<String, String> map);
 	public void boardReply(BoardDTO boardDTO);
 	public void boardModify(BoardDTO boardDTO);
+	public void boardDelete(int seq);
 }
