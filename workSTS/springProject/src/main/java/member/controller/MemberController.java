@@ -48,11 +48,11 @@ public class MemberController {
 		return loginResult;
 	}
 	
-	@RequestMapping(value="logout", method=RequestMethod.GET)
-	public ModelAndView logout(HttpSession session) {
-		session.invalidate();
-		return new ModelAndView("redirect:/main/index"); // 페이지 이동 // ajax로는 redirect 안됨.
-	}
+//	@RequestMapping(value="logout", method=RequestMethod.GET)
+//	public ModelAndView logout(HttpSession session) {
+//		session.invalidate();
+//		return new ModelAndView("redirect:/main/index"); // 페이지 이동 // ajax로는 redirect 안됨.
+//	}
 	
 	@RequestMapping(value="writeForm", method=RequestMethod.GET)
 	public ModelAndView writeForm() {

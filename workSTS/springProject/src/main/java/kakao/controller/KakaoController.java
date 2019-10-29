@@ -102,7 +102,7 @@ public class KakaoController {
 	}
 
 	public static JsonNode kakaoLogout(String autorize_code) {
-		final String RequestUrl = "https://kapi.kakao.com/v2/user/logout";
+		final String RequestUrl = "https://kapi.kakao.com/v1/user/logout";
 		final HttpClient client = HttpClientBuilder.create().build();
 		final HttpPost post = new HttpPost(RequestUrl);
 

@@ -64,15 +64,16 @@ public class IndexController {
         
         session.setAttribute("memId", id);
         session.setAttribute("memName", name);
+        session.setAttribute("memEmail", email);
         session.setAttribute("access_token", accessToken);
         
         return new ModelAndView("redirect:/main/index");
 	}
 	
-	@RequestMapping(value="/logout")
+	@RequestMapping(value="/logout", produces="application/json")
 	public String logout(HttpSession session) {
-	    KakaoController.kakaoLogout((String)session.getAttribute("access_token"));
+	    KakaoController.kakaoLogout(session.getAttribute("access_token").toString());
 	    session.invalidate();
-	    return "index";
+	    return "redirect:/main/index";
 	}
 }
