@@ -25,10 +25,9 @@
 			<td colspan="2" align="center">
 				<input type="button" id="loginBtn" value="로그인"> 
 				<input type="button" value="회원가입" onclick="location.href='/springProject/member/writeForm'">
-			</td>
+			</td>						
 		</tr>
 	</table>
-	<br><br>
 	<div id="loginResultDiv" style="text-align: center;"></div>
 </form>
 <script src="../js/member.js" type="text/javascript"></script>
