@@ -1,23 +1,47 @@
-//이미지 게시판 유효성 검사
-function checkImageboard() {
-	if(document.getElementById("imageId").value == "img_") {
-		alert("상품코드를 입력하세요");
-		document.getElementById("imageId").focus();
-	} else if(document.getElementById("imageName").value == "") {
-		alert("상품명을 입력하세요");
-		document.getElementById("imageName").focus();
-	} else if(document.getElementById("imagePrice").value == "") {
-		alert("단가를 입력하세요");
-		document.getElementById("imagePrice").focus();
-	} else if(document.getElementById("imageQty").value == "") {
-		alert("갯수를 입력하세요");
-		document.getElementById("imageQty").focus();
-	} else if(document.getElementById("imageContent").value == "") {
-		alert("상품내용을 입력하세요");
-		document.getElementById("imageContent").focus();
-	} else
-		document.imageboardWriteForm.submit();
-}
+$("#imageboardWriteBtn").click(function(){
+	$("#imageIdDiv").empty();
+	$("#imageNameDiv").empty();
+	$("#imagePriceDiv").empty();
+	$("#imageQtyDiv").empty();
+	$("#imageContentDiv").empty();
+	$("#img1Div").empty();
+	
+	if($("#imageId").val() == "") {
+		$("#imageIdDiv").text("상품코드를 입력하세요").css("color", "red").css("font-size", "8pt");
+		$("#imageId").focus();
+	} else if($("#imageName").val() == "") {
+		$("#imageNameDiv").text("상품명을 입력하세요").css("color", "red").css("font-size", "8pt");
+		$("#imageName").focus();
+	} else if($("#imagePrice").val() == "") {
+		$("#imagePriceDiv").text("단가를 입력하세요").css("color", "red").css("font-size", "8pt");
+		$("#imagePrice").focus();
+	} else if($("#imageQty").val() == "") {
+		$("#imageQtyDiv").text("갯수를 입력하세요").css("color", "red").css("font-size", "8pt");
+		$("#imageQty").focus();
+	} else if($("#imageContent").val() == "") {
+		$("#imageContentDiv").text("상품내용을 입력하세요").css("color", "red").css("font-size", "8pt");
+		$("#imageContent").focus();
+	} else {
+		var formData = new FormData($('#imageboardWriteForm')[0]);
+		
+		$.ajax({
+			type: 'post',
+			enctype: 'multipart/form-data',
+			processData: false,
+			contentType: false, 
+			url: '/springProject/imageboard/imageboardWrite',
+			data: formData,
+			success: function(){
+				alert("이미지 등록 성공");
+				//location.href='/springProject/imageboard/imageboardList';
+			},
+			error: function(err){
+				console.log(err);
+			}
+		});
+	}
+});
+
 //이미지 확대 
 function bigImage(imageName) {
 	var newWindow = window.open("", "", "width=500, height=500, left=500, top=250");

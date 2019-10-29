@@ -23,6 +23,7 @@ $("#boardWriteBtn").click(function(){
 			data : {"subject" : $("#subject").val(), "content" : $("#content").val()},
 			success : function(){
 				alert("글쓰기 성공");
+				location.href="/springProject/board/boardList";
 			}, 
 			error : function(err) {
 				console.log(err);

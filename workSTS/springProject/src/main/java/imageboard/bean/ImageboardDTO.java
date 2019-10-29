@@ -14,5 +14,6 @@ public class ImageboardDTO {
 	private int imageQty;
 	private String imageContent;
 	private String image1;
+	private String image2;
 	private String logtime;
 }
