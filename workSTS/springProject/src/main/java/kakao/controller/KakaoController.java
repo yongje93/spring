@@ -80,10 +80,7 @@ public class KakaoController {
 
 		try {
 			final HttpResponse response = client.execute(post);
-			final int responseCode = response.getStatusLine().getStatusCode();
-
 			System.out.println("\nSending 'POST' request to URL : " + RequestUrl);
-			System.out.println("Response Code : " + responseCode);
 
 			// JSON 형태 반환값 처리
 			ObjectMapper mapper = new ObjectMapper();
@@ -101,12 +98,12 @@ public class KakaoController {
 		return returnNode;
 	}
 
-	public static JsonNode kakaoLogout(String autorize_code) {
+	public static JsonNode kakaoLogout(JsonNode accessToken) {
 		final String RequestUrl = "https://kapi.kakao.com/v1/user/logout";
 		final HttpClient client = HttpClientBuilder.create().build();
 		final HttpPost post = new HttpPost(RequestUrl);
 
-		post.addHeader("Authorization", "Bearer " + autorize_code);
+		post.addHeader("Authorization", "Bearer " + accessToken);
 		JsonNode returnNode = null;
 
 		try {

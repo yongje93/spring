@@ -72,7 +72,8 @@ public class IndexController {
 	
 	@RequestMapping(value="/logout", produces="application/json")
 	public String logout(HttpSession session) {
-	    KakaoController.kakaoLogout(session.getAttribute("access_token").toString());
+	    JsonNode node =  KakaoController.kakaoLogout((JsonNode) session.getAttribute("access_token"));
+	    System.out.println("로그아웃 후 반환되는 아이디 : " + node.get("id"));
 	    session.invalidate();
 	    return "redirect:/main/index";
 	}
