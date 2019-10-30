@@ -1,78 +1,95 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+	pageEncoding="UTF-8"%>
+<link rel="stylesheet" href="../css/board.css">
 
-<form name="imageboardListForm" method="get" action="/miniproject/imageboard/imageboardDelete.do">
-<table border="1" frame="hsides" rules="rows" cellspacing="0" cellpadding="5" style="word-break:break-all;">
-	<tr>
-		<th width="100"><input type="checkbox" id="all" onclick="checkAll()"/>번호</th>
-		<th width="120">이미지</th>
-		<th width="200">상품명</th>
-		<th width="100">단가</th>
-		<th width="100">개수</th>
-		<th width="100">합계</th>
-	</tr>
-	<c:if test="${requestScope.imageboardList != null}">
-		<c:forEach var="imageboardDTO" items="${imageboardList}">
+<form name="imageboardListForm" id="imageboardListForm" method="post" action="/springProject/imageboard/imageboardDelete">
+	<table id="imageboardTable" border="1" frame="hsides" rules="rows"
+		cellspacing="0" cellpadding="5" style="word-break: break-all;">
 		<tr>
-			<td align="center"><input type="checkbox" name="check" value="${imageboardDTO.seq}">${imageboardDTO.seq}</td>
-			<td align="center"> 
-				<a class="onsubject" style="cursor: pointer;" href="javascript:void(0)" onclick="location.href='/miniproject/imageboard/imageboardView.do?seq=${imageboardDTO.seq}&pg=${pg}'">
-					<img src="http://localhost:8080/miniproject/storage/${imageboardDTO.image1}" width="100" height="100">
-				</a>
-			</td>
-			<td align="center">${imageboardDTO.imageName}</td>
-			<td align="center">
-				<fmt:formatNumber pattern="#,###원" value="${imageboardDTO.imagePrice}"/>
-			</td>
-			<td align="center">
-				<fmt:formatNumber pattern="#,###개" value="${imageboardDTO.imageQty}"/>
-			</td>
-			<td align="center">
-				<fmt:formatNumber pattern="#,###원" value="${imageboardDTO.imagePrice * imageboardDTO.imageQty}"/>
-			</td>
+			<th width="100"><input type="checkbox" id="all" />번호</th>
+			<th width="120">이미지</th>
+			<th width="200">상품명</th>
+			<th width="100">단가</th>
+			<th width="100">개수</th>
+			<th width="100">합계</th>
 		</tr>
-		</c:forEach>
-	</c:if>
-</table>	
-<br>
-<div style="float: left; width: 80px;">
-	<input type="button" value="선택삭제" onclick="checkDelete()">
-</div>
-<div style="float: left; width: 650px; text-align: center;">  	 
-	${imageboardPaging.pagingHTML}
-</div>
+	</table>
+	<br>
+	<div style="float: left; width: 80px;">
+		<input type="button" id="choiceDeleteBtn" value="선택삭제">
+	</div>
+	<div style="float: left; width: 650px; text-align: center;">
+		${imageboardPaging.pagingHTML}</div>
 </form>
 <script type="text/javascript">
-function checkAll() {
-	var check = document.getElementsByName("check");
+$(document).ready(function(){
+	$.ajax({
+		type: "post",
+		url: "/springProject/imageboard/getImageboardList",
+		data: "pg=${pg}",
+		dataType: "json",
+		success: function(data){
+			//alert(JSON.stringify(data));
+			
+			$.each(data.list, function(index, items){
+				$("<tr/>").append($("<td/>",{
+					align: "center",
+					text: items.seq
+					}).prepend($("<input/>",{
+						type: "checkbox",
+						value: items.seq,
+						name: "check",
+						class: "check"
+				}))).append($("<td/>",{
+					align: "center",
+					}).append($("<img/>",{
+						src: "../storage/"+items.image1,
+						style: "cursor: pointer; width: 70px; height: 70px;",
+						class: items.seq
+				}))).append($("<td/>",{
+					align: "center",
+					text: items.imageName
+				})).append($("<td/>",{
+					align: "center",
+					text: items.imagePrice.toLocaleString()
+				})).append($("<td/>",{
+					align: "center",
+					text: items.imageQty
+				})).append($("<td/>",{
+					align: "center",
+					text: (items.imagePrice*items.imageQty).toLocaleString()
+				})).appendTo($("#imageboardTable"));
+				
+				// 이미지 보기
+				$("."+items.seq).click(function(){
+					loaction.href="/springProject/imageboard/imageboardView?seq="+items.seq+"&pg=${pg}";     
+				}); 
+				
+			});
+		},
+		error: function(err){
+			console.log(err);
+		}
+	});
 	
-	if(document.getElementById("all").checked) {
-		for(i=0; i<check.length; i++) {
-			check[i].checked = true;
-		}
-	} else {
-		for(i=0; i<check.length; i++) {
-			check[i].checked = false;
-		}
-	}
-}
-
-function checkDelete() {
-	var check = document.getElementsByName("check");
-	var count = 0;
-	for(i=0; i<check.length; i++) {
-		if(check[i].checked) count++;
-	}
+	// 전체 선택/해제
+	$("#all").click(function(){
+		if($("#all").prop("checked"))
+			$(".check").prop("checked", true);
+		else
+			$(".check").prop("checked", false);
+	});
 	
-	if(count == 0)
-		alert("항목을 선택하세요");
-	else {
-		if(confirm("정말 삭제하시겠습니까?")) {
-			document.imageboardListForm.submit();
+	// 선택 삭제
+	$("#choiceDeleteBtn").click(function(){
+		var count = $(".check:checked").length;
+		if(count == 0) {
+			alert("삭제할 항목을 선택하세요!");
+		} else {
+			if(confirm("정말 삭제하시겠습니까?")) {
+				$("#imageboardListForm").submit();
+			}
 		}
-	}
-}
+	});
+});
 </script>
-<link rel="stylesheet" href="../css/board.css">

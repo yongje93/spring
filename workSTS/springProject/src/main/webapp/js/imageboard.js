@@ -33,7 +33,7 @@ $("#imageboardWriteBtn").click(function(){
 			data: formData,
 			success: function(){
 				alert("이미지 등록 성공");
-				//location.href='/springProject/imageboard/imageboardList';
+				location.href='/springProject/imageboard/imageboardList';
 			},
 			error: function(err){
 				console.log(err);

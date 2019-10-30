@@ -4,6 +4,6 @@
 <script type="text/javascript">
 window.onload=function() {
 	alert("이미지 삭제 성공");
-	location.href="/miniproject/imageboard/imageboardList.do?pg=1";
+	location.href="/springProject/imageboard/imageboardList?pg=1";
 }
 </script>

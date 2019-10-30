@@ -9,7 +9,7 @@
 		insert into imageboard values(seq_imageboard.nextval, #{imageId}, #{imageName}, #{imagePrice}, #{imageQty}, #{imageContent}, #{image1}, sysdate, #{image2})
 	</insert>
 	<!-- 이미지 게시판 목록 -->
-	<select id="imageboardList" parameterType="java.util.Map" resultType="imageboard">
+	<select id="getImageboardList" parameterType="java.util.Map" resultType="imageboard">
 		select * from
 		(select rownum rn, tt.* from
 		(select seq,imageid,imagename,imageprice,imageqty,imagecontent,image1 from imageboard order by seq desc)tt)
@@ -27,7 +27,7 @@
 	<delete id="imageboardDelete" parameterType="java.util.Map">
 		delete from imageboard where seq in 
 		<foreach collection="check" item="seq" index="i" open="(" separator="," close=")">
-			<!-- #{check[i]} -->	
+			<!-- ${check[i]} -->	
 			#{seq}
 		</foreach>
 	</delete>

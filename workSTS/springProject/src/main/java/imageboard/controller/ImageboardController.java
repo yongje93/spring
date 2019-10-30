@@ -3,7 +3,9 @@ package imageboard.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -113,4 +115,41 @@ public class ImageboardController {
 			imageboardService.imageboardWrite(imageboardDTO);		
 		}//for
 	}
+	
+	@RequestMapping(value="imageboardList", method=RequestMethod.GET)
+	public String imageboardList(@RequestParam(required=false, defaultValue="1") String pg, Model model) {
+		model.addAttribute("pg", pg);
+		model.addAttribute("display", "/imageboard/imageboardList.jsp");
+		return "/main/index";
+	}
+	
+	@RequestMapping(value="getImageboardList", method=RequestMethod.POST)
+	public ModelAndView getImageboardList(@RequestParam(required=false, defaultValue="1") String pg) {
+		//1페이지당 3개씩
+		int endNum = Integer.parseInt(pg)*3;
+		int startNum = endNum-2;
+		
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("startNum", startNum);
+		map.put("endNum", endNum);
+		
+		List<ImageboardDTO> list = imageboardService.getImageboardList(map);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("pg", pg);
+		mav.addObject("list", list);
+		mav.setViewName("jsonView");
+		return mav;
+	}
+	
+	@RequestMapping(value="imageboardDelete", method=RequestMethod.POST)
+	public String imageboardDelete(@RequestParam String[] check, Model model) {
+		Map<String, String[]> map = new HashMap<String, String[]>();
+		map.put("check", check);
+		imageboardService.imageboardDelete(map);
+		
+		model.addAttribute("display", "/imageboard/imageboardDelete.jsp");
+		return "/main/index";
+	}
+	
 }

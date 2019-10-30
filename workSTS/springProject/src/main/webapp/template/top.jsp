@@ -23,7 +23,12 @@ Spring을 이용한 미니프로젝트</h3>
 <c:if test="${memId == null}">
 <div id="kakao_id_login" style="text-align: center">
 	<a href="${kakaoUrl}">
-		<img src="../image/kakao_account_login_btn_medium_narrow.png"/>
+		<img width="223" src="../image/kakao_account_login_btn_medium_narrow.png"/>
+	</a>
+</div>
+<div id="naver_id_login" style="text-align: center">
+	<a href="${naverUrl}">
+	<img width="223" src="https://developers.naver.com/doc/review_201802/CK_bEFnWMeEBjXpQ5o8N_20180202_7aot50.png"/>
 	</a>
 </div>
 </c:if>
