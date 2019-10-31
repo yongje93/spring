@@ -18,8 +18,7 @@
 	<div style="float: left; width: 80px;">
 		<input type="button" id="choiceDeleteBtn" value="선택삭제">
 	</div>
-	<div style="float: left; width: 650px; text-align: center;">
-		${imageboardPaging.pagingHTML}</div>
+	<div id="imageboardPagingDiv" style="float: left; width: 650px; text-align: center;"></div>
 </form>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -62,10 +61,12 @@ $(document).ready(function(){
 				
 				// 이미지 보기
 				$("."+items.seq).click(function(){
-					loaction.href="/springProject/imageboard/imageboardView?seq="+items.seq+"&pg=${pg}";     
+					location.href="/springProject/imageboard/imageboardView?seq="+items.seq+"&pg=${pg}";     
 				}); 
 				
 			});
+				// 페이징처리
+				$("#imageboardPagingDiv").html(data.imageboardPaging.pagingHTML);
 		},
 		error: function(err){
 			console.log(err);

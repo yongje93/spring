@@ -19,7 +19,8 @@ public class ImageboardDTO {
 	private String imageContent;
 	private String image1;
 	private String image2;
-
+	
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy.MM.dd")
 	private Date logtime;
 }
+

@@ -28,4 +28,14 @@ public class ImageboardServiceImpl implements ImageboardService {
 	public void imageboardDelete(Map<String, String[]> map) {
 		imageboardDAO.imageboardDelete(map);
 	}
+
+	@Override
+	public ImageboardDTO getImageboardView(int pg) {
+		return imageboardDAO.getimageboardView(pg);
+	}
+	
+	@Override
+	public int getImageTotalA() {
+		return imageboardDAO.getImageTotalA();
+	}
 }

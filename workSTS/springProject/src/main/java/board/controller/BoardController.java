@@ -27,7 +27,6 @@ public class BoardController {
 	private BoardService boardService;
 	@Autowired
 	private BoardPaging boardPaging;
-	
 	@RequestMapping(value="boardWriteForm", method=RequestMethod.GET)
 	public ModelAndView boardWriteForm() {
 		ModelAndView mav = new ModelAndView();

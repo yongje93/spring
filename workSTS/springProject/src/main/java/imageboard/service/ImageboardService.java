@@ -13,4 +13,8 @@ public interface ImageboardService {
 
 	public void imageboardDelete(Map<String, String[]> map);
 
+	public ImageboardDTO getImageboardView(int parseInt);
+
+	public int getImageTotalA();
+
 }

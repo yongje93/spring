@@ -41,14 +41,3 @@ $("#imageboardWriteBtn").click(function(){
 		});
 	}
 });
-
-//이미지 확대 
-function bigImage(imageName) {
-	var newWindow = window.open("", "", "width=500, height=500, left=500, top=250");
-	var image = newWindow.document.createElement("img");
-	image.setAttribute("src", "http://localhost:8080/miniproject/storage/"+imageName);
-	image.setAttribute("width", "500");
-	image.setAttribute("height", "500");
-	newWindow.document.body.appendChild(image);
-	
-}

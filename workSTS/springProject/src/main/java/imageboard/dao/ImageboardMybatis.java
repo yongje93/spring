@@ -30,4 +30,14 @@ public class ImageboardMybatis implements ImageboardDAO {
 	public void imageboardDelete(Map<String, String[]> map) {
 		sqlSession.delete("imageboardSQL.imageboardDelete", map);		
 	}
+
+	@Override
+	public ImageboardDTO getimageboardView(int pg) {
+		return sqlSession.selectOne("imageboardSQL.getImageboard", pg);
+	}
+	
+	@Override
+	public int getImageTotalA() {
+		return sqlSession.selectOne("imageboardSQL.getImageTotalA");
+	}
 }
