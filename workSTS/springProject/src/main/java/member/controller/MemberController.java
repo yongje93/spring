@@ -4,9 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,27 +27,38 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
+	@Inject
+	PasswordEncoder passwordEncoder;
+	
 	@RequestMapping(value="login", method=RequestMethod.POST)
 	@ResponseBody
 	public String login(@RequestParam String id, @RequestParam String pwd, HttpSession session) {
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("id", id);
-		map.put("pwd", pwd);
+		String myPwd = memberService.getMember(id).getPwd();
 		
-		MemberDTO memberDTO = memberService.login(map);
+		System.out.println("디비에 저장된 비밀번호 : " + myPwd);
+		System.out.println("입력한 비밀번호 : " + pwd);
 		
-		String loginResult = null;
-		if(memberDTO == null) {
-			loginResult = "fail";
+		if(passwordEncoder.matches(pwd, myPwd)) {
+			System.out.println("비밀번호 일치");
+		} else {
+			System.out.println("비밀번호 불일치");
 		}
-		else {
-			session.setAttribute("memName", memberDTO.getName());
-			session.setAttribute("memId", memberDTO.getId());
-			session.setAttribute("memEmail", memberDTO.getEmail1() + "@" + memberDTO.getEmail2());
-
-			loginResult = "success";
-		}
-		return loginResult;
+		
+		/*
+		 * Map<String, String> map = new HashMap<String, String>(); map.put("id", id);
+		 * map.put("pwd", pwd);
+		 * 
+		 * MemberDTO memberDTO = memberService.login(map);
+		 * 
+		 * String loginResult = null; if(memberDTO == null) { loginResult = "fail"; }
+		 * else { session.setAttribute("memName", memberDTO.getName());
+		 * session.setAttribute("memId", memberDTO.getId());
+		 * session.setAttribute("memEmail", memberDTO.getEmail1() + "@" +
+		 * memberDTO.getEmail2());
+		 * 
+		 * loginResult = "success"; } return loginResult;
+		 */
+		return null;
 	}
 	
 //	@RequestMapping(value="logout", method=RequestMethod.GET)
@@ -71,6 +84,12 @@ public class MemberController {
 	@RequestMapping(value="write", method=RequestMethod.POST)
 	@ResponseBody
 	public void write(@ModelAttribute MemberDTO memberDTO) {
+		System.out.println("데이터 저장 전 비밀번호 : " + memberDTO.getPwd());
+		
+		String encPassword = passwordEncoder.encode(memberDTO.getPwd());
+		memberDTO.setPwd(encPassword);
+		System.out.println("암호화된 비밀번호 : " + encPassword);
+		
 		memberService.write(memberDTO);
 	}
 	

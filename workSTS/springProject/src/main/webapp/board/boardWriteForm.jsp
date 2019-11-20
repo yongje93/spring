@@ -1,14 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<!-- include libraries(jQuery, bootstrap) -->
-<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
-<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
-
-<!-- include summernote css/js -->
-<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet">
-<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-lite.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-lite.js"></script>
+<script src="../js/summernote-ko-KR.js"></script>
 
 <h2>글쓰기</h2>
 <!-- <form>
@@ -47,7 +42,6 @@
 
 <br><br>
 
-
 <input type="text" id="address" placeholder="주소" readonly="readonly">
 <input type="button" onclick="execDaumPostcode()" value="주소 검색"><br>
 <div id="map" style="width: 400px; height: 400px; margin-top: 10px; display: none"></div>
@@ -55,10 +49,18 @@
 <input type="text" id="address_y" readonly="readonly">
 <input type="text" id="address_x" readonly="readonly">
 
-
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=89c3afe322de0763fb20750b2bf6b62a&libraries=services"></script>
 <script>
+$(document).ready(function(){
+	$("#summernote").summernote({
+		placeholder: "내용을 입력하세요",
+		lang: "ko-KR",
+	    height: 400,
+	    disableResizeEditor: true
+	});
+});
+	
     var mapContainer = document.getElementById("map"), // 지도를 표시할 div
         mapOption = {					// y,       x
             center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
@@ -93,8 +95,8 @@
 
                         var result = results[0]; //첫번째 결과의 값을 활용
 						
-                        $("#address_y").val(result.y);
-                        $("#address_x").val(result.x);
+                        $("#address_y").val(result.y);	// 위도
+                        $("#address_x").val(result.x);	// 경도
                         
                         // 해당 주소에 대한 좌표를 받아서
                         var coords = new daum.maps.LatLng(result.y, result.x);

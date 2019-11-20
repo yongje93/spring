@@ -26,4 +26,5 @@
 	<select id="getZipcodeList" parameterType="java.util.Map" resultType="zipcode">
 		select * from newzipcode where sido like '%'||#{sido}||'%'  and nvl(sigungu, ' ') like '%'||#{sigungu}||'%' and roadname like '%'||#{roadname}||'%'
 	</select>
+	
 </mapper>

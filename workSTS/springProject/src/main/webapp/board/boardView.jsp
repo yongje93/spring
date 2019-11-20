@@ -69,7 +69,7 @@ $(document).ready(function(){
 			$("#seqSpan").text(data.boardDTO.seq);
 			$("#idSpan").text(data.boardDTO.id);
 			$("#hitSpan").text(data.boardDTO.hit);
-			$("#contentSpan").text(data.boardDTO.content);
+			$("#contentSpan").html(data.boardDTO.content);
 			
 			if(data.boardDTO.id == "${memId}") 
 				$("#updateAndDeleteSpan").show();
