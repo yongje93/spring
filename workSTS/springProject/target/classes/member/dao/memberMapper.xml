@@ -12,7 +12,8 @@
 	</select>
 	<!-- 회원가입 -->
 	<insert id="write" parameterType="member">
-		insert into member values(#{name},#{id},#{pwd},#{gender},#{email1},#{email2},#{tel1},#{tel2},#{tel3},#{zipcode},#{addr1},#{addr2},sysdate)
+		insert into member(name, id, pwd, gender, email1, email2, tel1, tel2, tel3, zipcode, addr1, addr2, logtime) 
+		values(#{name},#{id},#{pwd},#{gender},#{email1},#{email2},#{tel1},#{tel2},#{tel3},#{zipcode},#{addr1},#{addr2},sysdate)
 	</insert>
 	<!-- 회원정보수정 -->
 	<update id="update" parameterType="member">
@@ -26,5 +27,16 @@
 	<select id="getZipcodeList" parameterType="java.util.Map" resultType="zipcode">
 		select * from newzipcode where sido like '%'||#{sido}||'%'  and nvl(sigungu, ' ') like '%'||#{sigungu}||'%' and roadname like '%'||#{roadname}||'%'
 	</select>
-	
+	<!-- 이메일 인증키 update -->
+	<update id="createAuthKey" parameterType="member">
+		update member set memberAuthKey = #{memberAuthKey} where email1 = #{email1}
+	</update>
+	<!-- 이메일 인증 코드 확인 -->
+	<select id="chkAuth" parameterType="member" resultType="member">
+		select * from member where email1 = #{email1} and memberAuthKey = #{memberAuthKey}
+	</select>
+	<!-- 인증 후 인증키 Y로 바꾸기 -->
+	<update id="userAuth">
+		update member set memberAuthKey = 'Y' where email1 = #{email1}
+	</update>
 </mapper>

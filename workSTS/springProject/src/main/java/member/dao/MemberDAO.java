@@ -13,4 +13,7 @@ public interface MemberDAO {
 	public MemberDTO getMember(String id);
 	public MemberDTO checkId(String id);
 	public List<ZipcodeDTO> getZipcodeList(Map<String, String> map);
+	public void createAuthKey(String email1, String key);
+	public MemberDTO chkAuth(MemberDTO member);
+	public void userAuth(MemberDTO memberDTO);
 }

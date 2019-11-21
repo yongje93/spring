@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<form id="writeForm" name="writeForm" method="post" action="/springProject/member/write">
+<form id="writeForm" name="writeForm" method="post" action="/springProject/member/register">
 	<h1>회원가입</h1>
 	<table border="1" cellspacing="0" cellpadding="5">
 		<tr>

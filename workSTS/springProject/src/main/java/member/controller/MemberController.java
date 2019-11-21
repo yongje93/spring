@@ -10,12 +10,14 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import member.bean.MemberDTO;
 import member.bean.ZipcodeDTO;
@@ -75,11 +77,36 @@ public class MemberController {
 		return mav;
 	}
 	
-//	@RequestMapping(value="writeForm", method=RequestMethod.GET)
-//	public String writeForm(Model model) {
-//		model.addAttribute("display", "/member/writeForm.jsp");
-//		return "/main/index";
-//	}
+	@RequestMapping(value = "register", method = RequestMethod.POST)
+	public String RegisterPost(@ModelAttribute MemberDTO memberDTO, Model model, RedirectAttributes rttr) throws Exception {
+		System.out.println("regeseterPost 진입");
+		memberService.regist(memberDTO);
+        rttr.addFlashAttribute("msg" , "가입시 사용한 이메일로 인증해주세요");
+        return "redirect:/";
+	}
+	
+	//이메일 인증 코드 컴증
+	@RequestMapping(value = "emailConfirm", method = RequestMethod.GET)
+	public String emailConfirm(@ModelAttribute MemberDTO memberDTO, Model model, RedirectAttributes rttr) {
+		System.out.println("cont get user" + memberDTO);
+		MemberDTO member = new MemberDTO();
+		member = memberService.userAuth(memberDTO);
+		if(member == null) {
+			rttr.addFlashAttribute("msg", "비정상적인 접근 입니다. 다시 인증해 주세요");
+			return "redirect:/";
+		}
+		
+		model.addAttribute("login", member);
+		return "/member/emailOk";
+	}
+	
+	@RequestMapping(value = "emailOk", method = RequestMethod.GET)
+	public ModelAndView emailOk() {
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("display", "/member/emailOk.jsp");
+		mav.setViewName("/main/index");
+		return mav;
+	}
 	
 	@RequestMapping(value="write", method=RequestMethod.POST)
 	@ResponseBody

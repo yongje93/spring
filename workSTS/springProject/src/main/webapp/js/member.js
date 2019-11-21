@@ -65,11 +65,10 @@ $("#writeBtn").click(function(){
 	} else {
 		$.ajax({
 			type : "post",
-			url : "/springProject/member/write",
+			url : "/springProject/member/register",
 			data : $("#writeForm").serialize(),
 			success : function(){
-				alert("회원가입 성공!");
-				location.href="/springProject/main/index";
+				
 			},
 			error : function(e){
 				console.log(e);

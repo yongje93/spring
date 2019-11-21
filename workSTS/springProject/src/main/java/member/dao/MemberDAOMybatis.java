@@ -46,5 +46,25 @@ public class MemberDAOMybatis implements MemberDAO {
 	public List<ZipcodeDTO> getZipcodeList(Map<String, String> map) {
 		return sqlSession.selectList("memberSQL.getZipcodeList", map);
 	}
-
+	
+	// 해당 email에 인증 키 업데이트
+	@Override
+	public void createAuthKey(String email1, String key) {
+		MemberDTO member = new MemberDTO();
+		member.setMemberAuthKey(key);
+		member.setEmail1(email1);
+		sqlSession.update("memberSQL.createAuthKey", member);
+	}
+	
+	// 이메일 인증 코드 확인
+	@Override
+	public MemberDTO chkAuth(MemberDTO member) {
+		return sqlSession.selectOne("memberSQL.chkAuth", member);
+	}
+	
+	// 인증 후 계정 활성화
+	@Override
+	public void userAuth(MemberDTO memberDTO) {
+		sqlSession.update("memberSQL.userAuth", memberDTO);
+	}
 }
