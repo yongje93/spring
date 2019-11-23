@@ -5,7 +5,34 @@
 		 xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 						http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security.xsd">
 	
-	<!-- bcryptPasswordEncoder pwd 암호화(해시함수) -->
+	
+	<http auto-config="true" use-expressions="true">
+		<intercept-url pattern="/member/**" access="permitAll"/>
+		
+		<form-login
+			username-parameter="loginId"
+			password-parameter="loginPwd"
+			login-page="/member/loginForm"
+			login-processing-url="/member/login"
+			always-use-default-target="true"
+			default-target-url="/main/index"
+		/>
+		
+		<logout
+			logout-url="/member/logout"
+			logout-success-url="/main/index"
+		/>
+	</http>
+	
+	<authentication-manager>
+        <authentication-provider>
+            <user-service>
+                <user name="user" password="{noop}userPw" authorities="ROLE_USER"/>
+                <user name="guest" password="{noop}guest" authorities="ROLE_GUEST"/>
+            </user-service>
+        </authentication-provider>
+    </authentication-manager>
+	
 	<beans:bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
     
 </beans:beans>

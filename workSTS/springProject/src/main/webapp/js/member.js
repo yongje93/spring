@@ -8,7 +8,8 @@ $("#loginBtn").click(function(){
 	} else if($("#loginPwd").val()=="") {
 		$("#loginPwdDiv").text("비밀번호을 입력하세요").css("color", "tomato").css("font-size","8pt");
 	} else {
-		$.ajax({
+		$("#loginForm").submit();
+		/*$.ajax({
 			type : "post",
 			url : "/springProject/member/login",
 			data : "id="+$("#loginId").val()+"&pwd="+$("#loginPwd").val(),
@@ -24,7 +25,7 @@ $("#loginBtn").click(function(){
 				console.log(e);
 				alert("실패");
 			}
-		});
+		});*/
 	}
 });
 
