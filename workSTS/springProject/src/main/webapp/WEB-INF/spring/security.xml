@@ -16,6 +16,7 @@
 			login-processing-url="/member/login"
 			always-use-default-target="true"
 			default-target-url="/main/index"
+			authentication-failure-handler-ref="loginFailureHandler"
 		/>
 		
 		<logout
@@ -25,14 +26,22 @@
 	</http>
 	
 	<authentication-manager>
-        <authentication-provider>
-            <user-service>
-                <user name="user" password="{noop}userPw" authorities="ROLE_USER"/>
-                <user name="guest" password="{noop}guest" authorities="ROLE_GUEST"/>
-            </user-service>
-        </authentication-provider>
+		<authentication-provider ref="memberAuthProvider"/>
+        <authentication-provider user-service-ref="memberService"/>
     </authentication-manager>
 	
 	<beans:bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
-    
+    <beans:bean id="memberService" class="member.service.CustomUserDetailsService"/>
+	<beans:bean id="memberAuthProvider" class="member.service.CustomAuthenticationProvider"/>
+	
+	<beans:bean id="loginFailureHandler" class="member.handler.LoginFailureHandler">
+	    <beans:property name="loginIdName" value="loginId"/>
+	    <beans:property name="loginPwdName" value="loginPwd"/>
+	    <beans:property name="errorMsgName" value="ERRORMSG"/>
+	    <beans:property name="defaultFailureUrl" value="/member/loginForm?error"/>
+	</beans:bean>
+
+	<beans:bean id="loginSuccessHandler" class="member.handler.LoginSuccessHandler">
+	</beans:bean>
+
 </beans:beans>

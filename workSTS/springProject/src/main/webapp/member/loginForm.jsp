@@ -32,5 +32,8 @@
 		</tr>
 	</table>
 	<div id="loginResultDiv" style="text-align: center;"></div>
+	<c:if test="${not empty ERRORMSG}">
+		${ERRORMSG }
+	</c:if>
 </form>
 <script src="../js/member.js" type="text/javascript"></script>

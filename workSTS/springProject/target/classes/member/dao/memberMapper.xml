@@ -39,4 +39,8 @@
 	<update id="userAuth">
 		update member set memberAuthKey = 'Y' where email1 = #{email1}
 	</update>
+	<!-- 아이디로 회원정보 가져오기 -->
+	<select id="getUserById" parameterType="String" resultType="member.bean.CustomUserDetails">
+		select * from member where id=#{loginId}
+	</select>
 </mapper>

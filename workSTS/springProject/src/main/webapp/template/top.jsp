@@ -11,7 +11,7 @@ Spring을 이용한 미니프로젝트</h3>
 	<h5><a href='<c:url value="/member/loginForm"/>'>로그인</a>로그인 해주세요</h5>
 </sec:authorize>
 <sec:authorize access="isAuthenticated()">
-	<p><sec:authentication property="principal.username"/>님, 반갑습니다.</p>
+	<p>님, 반갑습니다.</p>
 	<form action="<c:url value="/member/logout"/>" method="post">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
         <button type="submit">로그아웃</button>
