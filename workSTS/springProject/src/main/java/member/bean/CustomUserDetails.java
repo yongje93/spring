@@ -13,10 +13,20 @@ import lombok.Data;
 @SuppressWarnings("serial")
 @Data
 public class CustomUserDetails implements UserDetails {
-	private String ID;
-    private String PWD;
+	private String name;
+	private String id;
+	private String pwd;
+	private String gender;
+	private String email1;
+	private String email2;
+	private String tel1;
+	private String tel2;
+	private String tel3;
+	private String zipcode;
+	private String addr1;
+	private String addr2;
+	private String memberAuthKey;
     private String AUTHORITY;
-    private String NAME;
     private boolean ENABLED;
 	
 	@Override
@@ -28,12 +38,12 @@ public class CustomUserDetails implements UserDetails {
 
 	@Override
 	public String getPassword() {
-		return PWD;
+		return pwd;
 	}
 
 	@Override
 	public String getUsername() {
-		return ID;
+		return id;
 	}
 
 	@Override

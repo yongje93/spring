@@ -4,7 +4,7 @@
 
 <%-- <c:if test="${memId == null}">
 	<jsp:include page="../member/loginForm.jsp"/>
-</c:if> --%>
+</c:if>  --%>
 <c:if test="${memId != null}">
 	<jsp:include page="../member/loginOk.jsp"/>
 </c:if>

@@ -14,10 +14,10 @@ public class CustomUserDetailsService implements UserDetailsService {
 	private MemberDAO memberDAO;
 	
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		CustomUserDetails member = memberDAO.getUserById(username);
+	public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
+		CustomUserDetails member = memberDAO.getUserById(id);
 		if(member == null) {
-			throw new UsernameNotFoundException(username);
+			throw new UsernameNotFoundException(id);
 		}
 		return member;
 	}

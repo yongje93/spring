@@ -27,6 +27,7 @@ public class BoardController {
 	private BoardService boardService;
 	@Autowired
 	private BoardPaging boardPaging;
+	
 	@RequestMapping(value="boardWriteForm", method=RequestMethod.GET)
 	public ModelAndView boardWriteForm() {
 		ModelAndView mav = new ModelAndView();
@@ -54,7 +55,7 @@ public class BoardController {
 	
 	@RequestMapping(value="getBoardList", method=RequestMethod.POST)
 	public ModelAndView getBoardList(@RequestParam(required=false, defaultValue="1") String pg, HttpSession session) {		
-		String memId = (String) session.getAttribute("memId");
+		
 		// 1페이지당 5개씩
 		int endNum = Integer.parseInt(pg) * 5;
 		int startNum = endNum - 4;
@@ -74,7 +75,7 @@ public class BoardController {
 		boardPaging.makePagingHTML();
 		
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("memId", memId);
+		
 		mav.addObject("boardList", boardList);
 		mav.addObject("boardPaging", boardPaging);
 		mav.setViewName("jsonView");

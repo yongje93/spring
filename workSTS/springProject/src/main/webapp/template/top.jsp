@@ -11,11 +11,14 @@ Spring을 이용한 미니프로젝트</h3>
 	<h5><a href='<c:url value="/member/loginForm"/>'>로그인</a>로그인 해주세요</h5>
 </sec:authorize>
 <sec:authorize access="isAuthenticated()">
-	<p>님, 반갑습니다.</p>
+	<p><sec:authentication property="principal"/>님, 반갑습니다.</p>
+	<p>principal : <sec:authentication property="principal"/></p>
+
 	<form action="<c:url value="/member/logout"/>" method="post">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
         <button type="submit">로그아웃</button>
 	</form>
+	<a href="/springProject/board/boardWriteForm">글쓰기</a>&emsp;
 </sec:authorize>
 
 <font size="2">

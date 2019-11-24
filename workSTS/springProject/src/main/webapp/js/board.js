@@ -80,13 +80,11 @@ $(document).ready(function(){
 			
 			// 로그인 여부
 			$("#boardListTable").on("click", "a", function(){
-				if(data.memId == null) {
-					alert("먼저 로그인하세요");
-				} else {
+				
 					//alert($(this).parent().prev().text());
 					//alert($(this).attr("class"));
 					location.href="/springProject/board/boardView?seq="+$(this).attr("class")+"&pg="+$("#pg").val();
-				}
+				
 			});
 		},
 		error : function(e){
